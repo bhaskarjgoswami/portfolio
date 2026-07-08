@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Points Gift Card Redemption - Bhaskar Jyoti Goswami</title>
+  <meta name="description" content="Evaluating and improving the points-to-gift-card redemption flow of an employee rewards platform - a research-led UX audit and redesign." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css?v=3" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='42' fill='%23C8553D'/></svg>" />
+</head>
+<body>
+  <div class="progress"></div>
+
+  <nav class="nav">
+    <a href="index.html" class="nav__brand"><span class="dot"></span> Bhaskar<span class="muted">.G</span></a>
+    <div class="nav__links">
+      <a href="index.html#top">Home</a>
+      <a href="index.html#work">Work</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#approach">Approach</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+    <a href="https://docs.google.com/document/d/1MnV4hA9-v-rK_mVla4tNzUMzqNDPpDWctYTQh0VfQiA/export?format=pdf" target="_blank" rel="noopener" class="nav__cta">Resume
+      <svg class="nav__cta-arrow" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1v9M4.5 6.5 8 10l3.5-3.5M2 13.5h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <button class="nav__toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </nav>
+
+  <!-- HERO -->
+  <header class="csx-hero">
+    <div class="wrap">
+      <a href="index.html#work" class="back"><svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M15 6H1M6 1L1 6l5 5" stroke="currentColor" stroke-width="1.4"/></svg> All work</a>
+      <div class="project__tags"><span class="tag">UX Audit</span><span class="tag">UX Research</span><span class="tag">Rewards &amp; Recognition</span></div>
+      <h1>Make spending points feel as good as earning them.</h1>
+      <p class="sub">Employees earned millions of recognition points - then hit a redemption flow that hid its own front door, buried the catalogue below the fold and mumbled through the maths. This is how I evaluated and rebuilt the points&nbsp;→&nbsp;gift&nbsp;card journey.</p>
+
+      <!-- Before / after -->
+      <div class="ba reveal">
+        <span class="ba__side ba__side--l">Before</span>
+        <div class="ba__frame" data-ba>
+          <img src="assets/case/redeem-final.png" alt="Gift card catalogue after the redesign - slim header, Steps to Redeem strip and cards above the fold" />
+          <div class="ba__top"><img src="assets/case/redeem-before-catalog.png" alt="Gift card catalogue before the redesign - a large banner and heading push the cards below the fold" /></div>
+          <div class="ba__handle"></div>
+        </div>
+        <span class="ba__side ba__side--r">After</span>
+      </div>
+
+      <!-- Client intro -->
+      <div class="client-card reveal" style="text-align:left">
+        <div class="client-card__logo">Points Redemption<span class="muted-sub">Employee rewards &amp; recognition · HR SaaS</span></div>
+        <p>On a rewards platform, redemption is the payoff - the moment recognition becomes something you can hold. It's also the flow every employee eventually reaches, and the one place where confusion reads as broken trust. I audited the existing gift-card redemption journey end to end, backed it with data and interviews, and redesigned the screens where it fell down.</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <!-- Why this flow -->
+    <section class="csx-row reveal">
+      <div class="csx-label">Why this flow</div>
+      <div class="cs-block__body">
+        <h2>The busiest journey on the platform - and the least examined.</h2>
+        <p>A year of platform data made the case for looking here first:</p>
+        <div class="cs-outcomes">
+          <div class="cs-outcome"><div class="num">377K</div><div class="lbl">Vouchers redeemed in a single year (Jan-Dec 2024)</div></div>
+          <div class="cs-outcome"><div class="num">440M</div><div class="lbl">Points spent through this one flow in the same period</div></div>
+          <div class="cs-outcome"><div class="num">57%</div><div class="lbl">Of logins came from the web browser - so the web flow was the priority (MS Teams 31%, mobile 12%)</div></div>
+        </div>
+        <p>Nearly half a billion points flowed through screens that had never been usability-tested. Analytics also showed frequent drop-offs before redemption was completed - people were arriving with points to spend and leaving without spending them.</p>
+        <div class="cs-meta" style="margin-top:34px">
+          <div><div class="k">Role</div><div class="v">UI/UX Designer</div></div>
+          <div><div class="k">Focus</div><div class="v">UX audit, research &amp; redesign</div></div>
+          <div><div class="k">Platform</div><div class="v">Web (primary channel)</div></div>
+          <div><div class="k">Tools</div><div class="v">Figma, interviews, usability tests</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Research -->
+    <section class="csx-row reveal">
+      <div class="csx-label">The research</div>
+      <div class="cs-block__body">
+        <h2>Eight interviews, twenty surveys, three competitors.</h2>
+        <p>I interviewed 8 active users and surveyed 20 more, walking them through the live flow from "I want to spend my points" to "I have my gift card." Three findings kept repeating:</p>
+        <ul>
+          <li><strong>People couldn't find the redemption section</strong> - the entry point simply wasn't where they expected it to be.</li>
+          <li><strong>The points-to-value conversion was confusing</strong> - nobody was sure what their points were actually worth.</li>
+          <li><strong>No clear confirmation</strong> - after redeeming, users weren't certain it had worked, so they double-checked their email and balance "just in case."</li>
+        </ul>
+        <p class="big-q">"It's hard to tell if my points will cover the gift card I want." - Sarah, 32, frequent redeemer</p>
+        <p>That quote became the persona for the whole project: someone who redeems often, wants to do it quickly and confidently, and is repeatedly made to do mental arithmetic the interface should be doing for her.</p>
+        <p>I also analysed three comparable rewards platforms. The pattern-match was clear - the best of them lead with <strong>clear categorisation</strong>, put <strong>value selection before terms</strong>, and give <strong>real-time confirmation</strong> the moment a reward is claimed:</p>
+        <div class="cs-figure fit"><img class="visual" src="assets/case/redeem-competitor-bonusly.png" alt="Competitor analysis - Bonusly's reward details panel puts denomination choices and remaining points ahead of everything else" /></div>
+        <p class="cs-figcap">Competitor teardown: Bonusly's reward panel leads with denominations mapped to points and a "points available to redeem" line - the exact transparency our users were asking for.</p>
+      </div>
+    </section>
+
+    <!-- Problems & solutions -->
+    <section class="csx-row reveal">
+      <div class="csx-label">The audit</div>
+      <div class="cs-block__body">
+        <h2>Four places the flow lost people.</h2>
+        <p>Combining the interviews with a heuristic walkthrough, the drop-offs traced back to four specific breakdowns - navigation, page hierarchy, modal hierarchy and feedback.</p>
+
+        <p><strong>1 · The front door was unmarked.</strong> A new user has no obvious way to start redeeming - clicking the wallet icon in the header unexpectedly lands on the gift-card page, while nothing is labelled "redeem." Discovery was an accident, not a path:</p>
+        <div class="cs-figure fit"><img class="visual" src="assets/case/redeem-before-home.png" alt="Before - home feed header where an unlabelled wallet icon is the hidden entry to gift cards" /></div>
+        <p class="cs-figcap">Before: the wallet icon silently doubles as the redemption entry. In testing, new users hunted through the nav instead.</p>
+        <p><em>The fix</em> - one clearly labelled entry point. Gift Cards became a first-class, named tab in the store navigation, and the header was decluttered so the points balance sits next to the action it feeds.</p>
+
+        <p><strong>2 · The catalogue hid below the fold.</strong> Half the first screen was spent on the header, a promotional banner and a heading - the actual gift cards, the reason people came, started below the fold:</p>
+        <div class="cs-figure fit"><img class="visual" src="assets/case/redeem-before-catalog.png" alt="Before - gift cards page where banner and heading push the catalogue below the fold" /></div>
+        <p class="cs-figcap">Before: banner + heading + intro text occupy the prime real estate; the cards you came for need a scroll.</p>
+        <p><em>The fix</em> - the banner went, and in its place a slim <strong>"Steps to Redeem"</strong> strip explains the whole journey in one line (browse → choose value → redeem with points → gift card by email). The catalogue now opens on the first screen, with brand filters alongside categories.</p>
+
+        <p><strong>3 · Terms &amp; conditions outranked the price.</strong> Inside the redeem dialog, the T&amp;C block dominated while the two decisions that matter - unit price and quantity - were squeezed into a thin row above it:</p>
+        <div class="cs-figure fit"><img class="visual" src="assets/case/redeem-before-tnc.png" alt="Before - redeem dialog where terms and conditions take most of the space and price plus quantity are minimised" /></div>
+        <p class="cs-figcap">Before: legal copy gets the stage; the purchase decision gets a footnote.</p>
+        <p><em>The fix</em> - the dialog was re-ranked around the decision: card value and quantity first, shown with their points cost; terms tucked into a collapsed section for the people who actually want them.</p>
+
+        <p><strong>4 · The maths never explained itself.</strong> The confirmation showed the price as a bare calculation of redemption points - numbers without a sentence. Users saw "500" three ways and still asked, "so what's left, and did it work?":</p>
+        <div class="cs-figure fit" style="max-width:760px; margin-inline:auto"><img class="visual" src="assets/case/redeem-before-confirm.png" alt="Before - confirm gift card dialog listing cost, points to be deducted and points available as raw numbers" /></div>
+        <p class="cs-figcap">Before: cost, deduction and balance as unlabelled arithmetic - and no positive confirmation once redeemed.</p>
+        <p><em>The fix</em> - the confirmation speaks plainly: what you're getting, exactly how many points it costs, and what your balance will be after - followed by an explicit success state and email receipt, so nobody has to wonder whether it worked.</p>
+      </div>
+    </section>
+
+    <!-- Design process -->
+    <section class="csx-row reveal">
+      <div class="csx-label">The process</div>
+      <div class="cs-block__body">
+        <h2>Sketch the flow, test the flow, then draw the pixels.</h2>
+        <p>Ideation centred on three moves: a dedicated, findable way in; a visual points-to-value conversion everywhere a price appears; and a confirmation screen that closes the loop. I sketched the redemption journey as low-fidelity wireframes first and validated the skeleton with users before any UI polish:</p>
+        <div class="cs-figure fit"><img class="visual" src="assets/case/redeem-wireframes.png" alt="Whiteboard wireframes - the catalogue grid with steps strip, and the redeem dialog with value selection ahead of terms" /></div>
+        <p class="cs-figcap">Whiteboard lo-fi: the catalogue with the steps strip up top, and the redeem dialog re-ranked around value and quantity.</p>
+        <p>The follow-up interviews were structured around five checkpoints - first impressions, filter &amp; search, card information &amp; call-to-action, the redemption flow itself, and open suggestions. Small but load-bearing details came out of these sessions: the "Available" tag needed to earn its place, the search had to actually find specific brands, and every card needed its action visible without hovering.</p>
+      </div>
+    </section>
+
+    <!-- Validation -->
+    <section class="csx-row reveal">
+      <div class="csx-label">The validation</div>
+      <div class="cs-block__body">
+        <h2>Tested with the same eight users. The numbers moved.</h2>
+        <p>I ran moderated usability tests of the redesigned flow with 8 frequent redeemers, measuring the same tasks as the baseline:</p>
+        <div class="cs-outcomes">
+          <div class="cs-outcome"><div class="num">60→90%</div><div class="lbl">Task completion rate, before → after the redesign</div></div>
+          <div class="cs-outcome"><div class="num">~1 min</div><div class="lbl">Average time to complete a redemption, down from several</div></div>
+          <div class="cs-outcome"><div class="num">4.8/5</div><div class="lbl">Post-task satisfaction score across participants</div></div>
+        </div>
+        <p>Testing also drove two final iterations: the Redeem button's colour contrast was strengthened after it under-performed against the "Available" tag, and error messages for invalid entries were rewritten to say what went wrong and what to do next.</p>
+      </div>
+    </section>
+
+    <!-- Final design -->
+    <section class="csx-row reveal">
+      <div class="csx-label">The final design</div>
+      <div class="cs-block__body">
+        <h2>Everything you need to redeem, on one screen.</h2>
+        <div class="cs-figure fit"><img class="visual" src="assets/case/redeem-final.png" alt="Final design - gift cards page with slim header, Steps to Redeem strip, category and brand filters, and cards with prominent Redeem buttons above the fold" /></div>
+        <p class="cs-figcap">The shipped catalogue: slim header, the four-step strip where the banner used to be, brand filters, and every card carrying its own Redeem action - all above the fold.</p>
+        <ul>
+          <li><strong>One named way in</strong> - Gift Cards as a labelled tab, points balance beside it.</li>
+          <li><strong>Steps to Redeem strip</strong> - the whole journey explained in one glance, replacing a decorative banner.</li>
+          <li><strong>Catalogue first</strong> - cards, availability and actions on the first screen; categories and brands filterable from the left rail.</li>
+          <li><strong>Honest arithmetic</strong> - value selection mapped to points, a confirmation that restates cost, deduction and remaining balance, and a real success state.</li>
+        </ul>
+        <p>The full deck behind this study - data, interview scripts and iterations - lives in <a href="https://www.figma.com/deck/nsFdxpxXkVBQf9AloEyaHH/Case-study" target="_blank" rel="noopener">Figma&nbsp;→</a></p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Tools -->
+  <section class="tools reveal">
+    <div class="wrap">
+      <div class="project__tags" style="justify-content:center; margin-bottom:18px"><span class="tag">UX Audit</span><span class="tag">UX Research</span></div>
+      <h2>Tools &amp; methods used in this project.</h2>
+      <div class="tools__chips">
+        <span class="tool-chip">Figma</span>
+        <span class="tool-chip">User Interviews</span>
+        <span class="tool-chip">Surveys</span>
+        <span class="tool-chip">Product Analytics</span>
+        <span class="tool-chip">Competitive Analysis</span>
+        <span class="tool-chip">Personas</span>
+        <span class="tool-chip">Lo-fi Wireframes</span>
+        <span class="tool-chip">Usability Testing</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Takeaway quote -->
+  <section class="wrap" style="padding-block: clamp(44px,6.5vw,88px)">
+    <div class="csx-row reveal" style="border:none; padding-block:0">
+      <div class="csx-label">Takeaway</div>
+      <div class="quote-card">
+        <div class="quote-card__brand">Redemption<span class="muted-sub" style="display:block; font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-faint); margin-top:10px">Lessons learned</span></div>
+        <div>
+          <p class="quote-card__q">"When points behave like money, transparency is the whole product - show the maths, confirm the moment, and never make trust do the work the interface should. Continuous testing kept every iteration honest."</p>
+          <div class="quote-card__who">
+            <img src="assets/bhaskar.jpg" alt="Bhaskar Jyoti Goswami" />
+            <div><div class="n">Bhaskar Jyoti Goswami</div><div class="t">UI/UX Designer</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Next -->
+  <section class="cs-next">
+    <div class="wrap">
+      <span class="eyebrow">Next project</span>
+      <a href="case-unseen.html">Designing for the Unseen</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer__bottom" style="border:none">
+        <span>© <span data-year></span> Bhaskar Jyoti Goswami</span>
+        <a href="index.html#contact">bhaskarjgoswami@gmail.com</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js?v=3"></script>
+</body>
+</html>

@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Product rail — demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #29294C;            /* lucky-point / primary-500 */
+      --neutral-100: #F2F4F7;     /* light rail surface */
+      --neutral-200: #EAECF0;
+      --page-surface: #F3F6FD;    /* pulse page background */
+      --text-muted: #667085;
+      --violet: #7C5CE0;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      height: 100vh;
+      display: flex;
+      overflow: hidden;
+      background: var(--page-surface);
+    }
+
+    /* ---------- Product rail ---------- */
+
+    .product-rail {
+      height: 100vh;
+      width: 76px;
+      flex-shrink: 0;
+      background: var(--neutral-100);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding-bottom: 16px;
+      overflow-y: auto;
+      transition: background-color 200ms ease;
+      position: relative;
+      z-index: 30;
+    }
+
+    .rail-toggle-area {
+      height: 60px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .rail-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border: none;
+      background: transparent;
+      border-radius: 12px;
+      cursor: pointer;
+      color: rgba(41, 41, 76, 0.7);
+      transition: background-color 150ms, color 150ms;
+    }
+    .rail-toggle:hover { background: rgba(41, 41, 76, 0.1); color: var(--navy); }
+
+    .rail-item {
+      width: 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      padding: 12px 0;
+      border: none;
+      background: transparent;
+      border-radius: 12px;
+      cursor: pointer;
+      color: rgba(41, 41, 76, 0.55);
+      transition: background-color 150ms, color 150ms;
+      font-family: inherit;
+    }
+    .rail-item:hover { background: rgba(41, 41, 76, 0.1); color: rgba(41, 41, 76, 0.9); }
+    .rail-item.active { background: rgba(41, 41, 76, 0.15); color: var(--navy); }
+
+    .rail-label {
+      font-size: 10px;
+      line-height: 1.25;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    /* ---------- Theme switch (bottom of rail) ---------- */
+
+    .rail-theme-area {
+      margin-top: auto;
+      padding-top: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .rail-theme-toggle {
+      position: relative;
+      width: 32px;
+      height: 18px;
+      border: none;
+      border-radius: 9999px;
+      background: rgba(41, 41, 76, 0.2);
+      cursor: pointer;
+      transition: background-color 150ms;
+    }
+
+    .rail-theme-knob {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 14px;
+      height: 14px;
+      border-radius: 9999px;
+      background: #fff;
+      box-shadow: 0 1px 2px rgba(16, 24, 40, 0.1);
+      transition: transform 150ms;
+    }
+
+    /* ---------- Dark rail variant ---------- */
+
+    body.rail-dark .product-rail { background: var(--navy); }
+    body.rail-dark .rail-toggle { color: rgba(255, 255, 255, 0.7); }
+    body.rail-dark .rail-toggle:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
+    body.rail-dark .rail-item { color: rgba(255, 255, 255, 0.55); }
+    body.rail-dark .rail-item:hover { background: rgba(255, 255, 255, 0.1); color: rgba(255, 255, 255, 0.9); }
+    body.rail-dark .rail-item.active { background: rgba(255, 255, 255, 0.15); color: #fff; }
+    body.rail-dark .rail-theme-toggle { background: rgba(255, 255, 255, 0.25); }
+    body.rail-dark .rail-theme-knob { transform: translateX(14px); }
+
+    /* ---------- Hover flyout menu ---------- */
+
+    .flyout {
+      position: fixed;
+      left: 76px;
+      top: 0;
+      bottom: 0;
+      width: 248px;
+      background: #fff;
+      box-shadow: 0 20px 25px -5px rgba(16, 24, 40, 0.1), 0 8px 10px -6px rgba(16, 24, 40, 0.1);
+      padding: 8px 16px;
+      z-index: 25;
+      opacity: 0;
+      transform: translateX(-8px);
+      pointer-events: none;
+      transition: opacity 150ms ease, transform 150ms ease;
+      overflow-y: auto;
+    }
+    .flyout.open {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
+    }
+
+    .flyout h2 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--navy);
+      padding: 16px 10px 12px;
+    }
+
+    .flyout hr {
+      border: none;
+      border-top: 1px solid var(--neutral-100);
+      margin-bottom: 16px;
+    }
+
+    /* ---------- Right side: header + sidebar + page ---------- */
+
+    .shell { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+
+    .header {
+      height: 64px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .header-logo {
+      width: 248px;
+      padding: 0 16px 0 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+      transition: width 200ms ease;
+    }
+    .header-logo img { height: 25px; width: auto; object-fit: contain; }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-left: 16px;
+      font-size: 14px;
+    }
+    .breadcrumb .product { font-weight: 600; letter-spacing: 0.025em; color: #98A2B3; }
+    .breadcrumb .slash { color: #D0D5DD; }
+    .breadcrumb .page-name { font-weight: 500; color: var(--navy); }
+
+    .body-row { flex: 1; display: flex; min-height: 0; }
+
+    .sidebar {
+      width: 248px;
+      background: #fff;
+      padding: 8px 16px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      overflow-x: hidden;
+      transition: width 200ms ease, padding 200ms ease;
+      white-space: nowrap;
+    }
+
+    /* Collapsed state — sidebar shrinks to a thin white strip between rail and page,
+       and the tinted page gets a rounded top-left corner like the real portal shell */
+    body.collapsed .sidebar { width: 16px; padding-left: 0; padding-right: 0; }
+    body.collapsed .sidebar > * { display: none; }
+    .body-row { background: #fff; }
+    body.collapsed .page { border-top-left-radius: 12px; }
+
+    .sidebar h2 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--navy);
+      padding: 16px 10px 12px;
+    }
+
+    .sidebar hr, .flyout-hr {
+      border: none;
+      border-top: 1px solid var(--neutral-100);
+      margin-bottom: 16px;
+    }
+
+    .create-btn {
+      width: 100%;
+      padding: 12px 10px;
+      border: none;
+      border-radius: 10px;
+      background: var(--violet);
+      color: #fff;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 12px;
+      transition: background-color 150ms;
+    }
+    .create-btn:hover { background: #6B4BD1; }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 10px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--navy);
+      cursor: pointer;
+    }
+    .nav-item:hover { background: var(--neutral-100); }
+    .nav-item.active { background: #F6F4FE; color: var(--violet); font-weight: 600; }
+    .nav-item svg { flex-shrink: 0; }
+
+    .nav-group {
+      font-size: 11px;
+      font-weight: 600;
+      color: #98A2B3;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 16px 10px 4px;
+    }
+
+    .page {
+      flex: 1;
+      background: var(--page-surface);
+      padding: 24px 32px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* Screenshot of the real dashboard, when provided — fills the content area
+       edge-to-edge since the capture carries its own page tint and spacing */
+    .page-shot {
+      width: 100%;
+      display: block;
+    }
+    .page.has-shot { padding: 0; }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 24px;
+    }
+    .card h3 { font-size: 16px; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+    .card p { font-size: 14px; font-weight: 500; color: var(--text-muted); }
+
+    .card-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .kpi { background: #fff; border-radius: 12px; padding: 16px; }
+    .kpi .num { font-size: 32px; font-weight: 700; color: var(--navy); line-height: 1; }
+    .kpi .lbl { font-size: 14px; font-weight: 500; color: var(--text-muted); margin-top: 4px; }
+
+    /* ---------- Tooltip for the theme switch ---------- */
+
+    .tip-host { position: relative; }
+    .tip {
+      /* Fixed to the viewport so it never adds overflow (and a scrollbar) to the rail */
+      position: fixed;
+      left: 86px;
+      bottom: 22px;
+      background: #fff;
+      color: var(--navy);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 8px 12px;
+      border-radius: 10px;
+      box-shadow: 0 20px 25px -5px rgba(16, 24, 40, 0.1), 0 8px 10px -6px rgba(16, 24, 40, 0.1);
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 200ms;
+      z-index: 40;
+    }
+    .tip-host:hover .tip { opacity: 1; }
+  </style>
+</head>
+<body>
+
+  <!-- ===================== Product rail ===================== -->
+  <nav class="product-rail" id="rail" aria-label="Products">
+    <div class="rail-toggle-area">
+      <button type="button" class="rail-toggle" id="railCollapseBtn" aria-label="Toggle sidebar">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+
+    <button type="button" class="rail-item" data-product="Recognition">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l4.5 3L12 5l4.5 6L21 8l-1.5 10h-15L3 8z"/><path d="M6 21h12"/></svg>
+      <span class="rail-label">Recognition</span>
+    </button>
+
+    <button type="button" class="rail-item" data-product="Fit">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5s-7.5-4.7-9.3-9.3C1.3 7.6 3.6 4.5 6.9 4.5c2 0 3.7 1.1 4.6 2.8h1c.9-1.7 2.6-2.8 4.6-2.8 3.3 0 5.6 3.1 4.2 6.7-1.8 4.6-9.3 9.3-9.3 9.3z"/></svg>
+      <span class="rail-label">Fit</span>
+    </button>
+
+    <button type="button" class="rail-item active" data-product="Pulse">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M7 13.5l2.5-4 2.5 5 2.5-6 2.5 5"/></svg>
+      <span class="rail-label">Pulse</span>
+    </button>
+
+    <button type="button" class="rail-item" data-product="Overall">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="9" cy="10" r="0.5"/><circle cx="15" cy="10" r="0.5"/><path d="M8.5 14.5c.9 1 2.1 1.5 3.5 1.5s2.6-.5 3.5-1.5"/></svg>
+      <span class="rail-label">Overall</span>
+    </button>
+
+    <button type="button" class="rail-item" data-product="Redeem">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.6 12.2a1.5 1.5 0 001.5 1.3h8.3a1.5 1.5 0 001.5-1.2L21 8H6"/><circle cx="10" cy="20.5" r="1"/><circle cx="17" cy="20.5" r="1"/></svg>
+      <span class="rail-label">Redeem</span>
+    </button>
+
+    <button type="button" class="rail-item" data-product="Milestone">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="4"/><path d="M8 3v4M16 3v4M3 10h18"/><path d="M12 13l.9 1.8 2 .3-1.45 1.4.35 2-1.8-.95-1.8.95.35-2L9.1 15.1l2-.3L12 13z"/></svg>
+      <span class="rail-label">Milestone</span>
+    </button>
+
+    <button type="button" class="rail-item" data-product="Perks">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4l-7.2 7.2a2 2 0 01-2.8 0l-7-7A2 2 0 013 12.2V5a2 2 0 012-2h7.2a2 2 0 011.4.6l7 7a2 2 0 010 2.8z"/><circle cx="8.5" cy="8.5" r="1.25"/></svg>
+      <span class="rail-label">Perks</span>
+    </button>
+
+    <div class="rail-theme-area tip-host">
+      <button type="button" class="rail-theme-toggle" id="themeToggle" aria-label="Switch rail theme">
+        <span class="rail-theme-knob"></span>
+      </button>
+      <span class="tip" id="themeTip">Dark rail</span>
+    </div>
+  </nav>
+
+  <!-- ===================== Hover flyout ===================== -->
+  <div class="flyout" id="flyout" aria-hidden="true">
+    <h2 id="flyoutTitle">Vantage Pulse</h2>
+    <hr />
+    <div id="flyoutItems"></div>
+  </div>
+
+  <!-- ===================== Header + sidebar + page ===================== -->
+  <div class="shell">
+    <header class="header">
+      <div class="header-logo">
+        <img src="vc-logo.png" alt="Vantage Circle" />
+      </div>
+      <div class="breadcrumb" aria-label="Breadcrumb">
+        <span class="product" id="crumbProduct">PULSE</span>
+        <span class="slash" aria-hidden="true">/</span>
+        <span class="page-name">Overview</span>
+      </div>
+    </header>
+
+    <div class="body-row">
+      <aside class="sidebar" id="sidebar">
+        <h2 id="sidebarTitle">Vantage Pulse</h2>
+        <hr />
+        <button type="button" class="create-btn">Create survey</button>
+        <div class="nav-item active">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M7 13.5l2.5-4 2.5 5 2.5-6 2.5 5"/></svg>
+          Overview
+        </div>
+        <div class="nav-group">Build</div>
+        <div class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="3"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>
+          Surveys
+        </div>
+        <div class="nav-group">Analyze</div>
+        <div class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v16a2 2 0 002 2h16"/><path d="M7 14l3.5-4 3 3L18 8"/></svg>
+          Insights
+        </div>
+      </aside>
+
+      <main class="page" id="page">
+        <!-- Drop a screenshot named main-content.png into this folder and it
+             replaces the mock cards below automatically. -->
+        <img class="page-shot" id="pageShot" src="main-content.png" alt="Dashboard overview"
+             onload="this.closest('.page').classList.add('has-shot');"
+             onerror="this.remove(); document.getElementById('mockContent').style.display='contents';" />
+        <div id="mockContent" style="display: none">
+          <div style="display: contents">
+            <div class="card" style="margin-bottom: 24px">
+              <h3>Welcome, Jonathan</h3>
+              <p>You are now viewing the summary of your organisation's pulse.</p>
+            </div>
+            <div class="card-row" style="margin-bottom: 24px">
+              <div class="kpi"><div class="num">72</div><div class="lbl">Engagement score</div></div>
+              <div class="kpi"><div class="num">86%</div><div class="lbl">Participation</div></div>
+              <div class="kpi"><div class="num">+12</div><div class="lbl">eNPS</div></div>
+            </div>
+            <div class="card">
+              <h3>Employee net promoter score</h3>
+              <p>Use the switch at the bottom of the left rail to preview the light and dark rail themes. Hover a product for its menu; the toggles collapse the sidebar.</p>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    // ---------- Rail theme switch (persisted) ----------
+    const toggle = document.getElementById('themeToggle');
+    const tip = document.getElementById('themeTip');
+
+    function applyTheme(dark) {
+      document.body.classList.toggle('rail-dark', dark);
+      toggle.setAttribute('aria-pressed', String(dark));
+      tip.textContent = dark ? 'Light rail' : 'Dark rail';
+    }
+
+    applyTheme(localStorage.getItem('rail-theme-dark') === 'true');
+
+    toggle.addEventListener('click', () => {
+      const dark = !document.body.classList.contains('rail-dark');
+      localStorage.setItem('rail-theme-dark', String(dark));
+      applyTheme(dark);
+    });
+
+    // ---------- Sidebar collapse (persisted) ----------
+    function applyCollapsed(collapsed) {
+      document.body.classList.toggle('collapsed', collapsed);
+    }
+
+    applyCollapsed(localStorage.getItem('rail-collapsed') === 'true');
+
+    function toggleCollapsed() {
+      const collapsed = !document.body.classList.contains('collapsed');
+      localStorage.setItem('rail-collapsed', String(collapsed));
+      applyCollapsed(collapsed);
+      if (!collapsed) {
+        document.getElementById('flyout').classList.remove('open');
+      }
+    }
+
+    document.getElementById('railCollapseBtn').addEventListener('click', toggleCollapsed);
+
+    // ---------- Product menus (for flyout + active sidebar) ----------
+    const MENUS = {
+      Recognition: ['Overview', 'Awards', 'Budget allocation', 'Announcements', 'Reports'],
+      Fit: ['Overview', 'Challenges', 'Leaderboard', 'Reports'],
+      Pulse: ['Overview', 'Surveys', 'Insights', 'Configuration'],
+      Overall: ['Overview', 'Analytics', 'Reports'],
+      Redeem: ['Gift cards', 'Merchandise', 'Experiences', 'Orders'],
+      Milestone: ['Overview', 'Service awards', 'Celebrations'],
+      Perks: ['Overview', 'Deals', 'Categories'],
+    };
+
+    // ---------- Hover flyout ----------
+    const flyout = document.getElementById('flyout');
+    const flyoutTitle = document.getElementById('flyoutTitle');
+    const flyoutItems = document.getElementById('flyoutItems');
+    const rail = document.getElementById('rail');
+    let hideTimer = null;
+
+    function showFlyout(product) {
+      // Flyout only when the sidebar is collapsed — same as the real app
+      if (!document.body.classList.contains('collapsed')) return;
+      clearTimeout(hideTimer);
+      flyoutTitle.textContent = 'Vantage ' + product;
+      flyoutItems.innerHTML = MENUS[product]
+        .map((label, i) => '<div class="nav-item' + (i === 0 ? ' active' : '') + '">' + label + '</div>')
+        .join('');
+      flyout.classList.add('open');
+      flyout.setAttribute('aria-hidden', 'false');
+    }
+
+    function scheduleHide() {
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(() => {
+        flyout.classList.remove('open');
+        flyout.setAttribute('aria-hidden', 'true');
+      }, 120);
+    }
+
+    document.querySelectorAll('.rail-item').forEach((item) => {
+      item.addEventListener('mouseenter', () => showFlyout(item.dataset.product));
+      item.addEventListener('mouseleave', scheduleHide);
+    });
+    flyout.addEventListener('mouseenter', () => clearTimeout(hideTimer));
+    flyout.addEventListener('mouseleave', scheduleHide);
+    rail.addEventListener('mouseleave', scheduleHide);
+
+    // ---------- Click a product: active state + breadcrumb + sidebar ----------
+    const crumbProduct = document.getElementById('crumbProduct');
+    const sidebarTitle = document.getElementById('sidebarTitle');
+    document.querySelectorAll('.rail-item').forEach((item) => {
+      item.addEventListener('click', () => {
+        document.querySelectorAll('.rail-item').forEach((i) => i.classList.remove('active'));
+        item.classList.add('active');
+        const name = item.dataset.product;
+        crumbProduct.textContent = name.toUpperCase();
+        sidebarTitle.textContent = 'Vantage ' + name;
+      });
+    });
+  </script>
+</body>
+</html>

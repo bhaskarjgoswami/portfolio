@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Before — Scheduling</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { width:1600px; height:976px; overflow:hidden; font-family:'Inter',sans-serif; background:#F9FAFB; color:#29294C; }
+
+  /* dialog header */
+  .dlg-head { height:64px; background:#fff; border-bottom:1px solid #E4E7EC; display:flex; align-items:center; justify-content:space-between; padding:0 28px; }
+  .dlg-head .l { display:flex; align-items:center; gap:14px; }
+  .dlg-head .img { width:36px; height:36px; border-radius:4px; background:#EDE9FE; display:flex; align-items:center; justify-content:center; }
+  .dlg-head .img svg { width:20px; height:20px; }
+  .dlg-head .t { font-size:17px; font-weight:700; color:#29294C; }
+  .dlg-close { width:32px; height:32px; border:none; background:none; color:#667085; font-size:20px; cursor:pointer; }
+
+  /* stepper */
+  .stepper { display:flex; align-items:center; justify-content:center; gap:10px; padding:22px 0 18px; background:#fff; border-bottom:1px solid #EEF0F4; }
+  .step { display:flex; align-items:center; gap:8px; }
+  .step .num { width:26px; height:26px; border-radius:50%; border:1.5px solid #C7C7C7; color:#98A2B3; font-size:12px; font-weight:600; display:flex; align-items:center; justify-content:center; background:#fff; }
+  .step.done .num { background:#7F56D9; border-color:#7F56D9; color:#fff; }
+  .step.active .num { border-color:#29294C; color:#29294C; }
+  .step .lbl { font-size:12.5px; color:#98A2B3; font-weight:500; white-space:nowrap; }
+  .step.active .lbl { color:#29294C; font-weight:600; }
+  .step.done .lbl { color:#667085; }
+  .conn { width:46px; height:1px; background:#D5DADD; }
+
+  /* content */
+  .content { padding:40px 80px 0; height:calc(976px - 64px - 67px - 92px); overflow:hidden; }
+  .form-box { max-width:770px; margin:0 auto; background:#F2F2FB; box-shadow:0 2px 10px #F2F2FB; border-radius:4px; padding:34px 40px 38px; }
+  .card-title { font-size:21px; font-weight:700; letter-spacing:.04em; color:#29294C; margin-bottom:14px; }
+  .sub1 { font-size:13.5px; color:#3F3D56; text-align:justify; line-height:1.6; margin-bottom:8px; }
+  .sub2 { font-size:12.5px; color:#667085; text-align:justify; line-height:1.6; margin-bottom:26px; }
+
+  .row { display:flex; gap:22px; margin-bottom:20px; }
+  .field { flex:1; }
+  .field label { display:block; font-size:12px; color:#3F3D56; font-weight:500; margin-bottom:6px; }
+  .input { height:40px; background:#fff; border:1px solid #C7C7C7; border-radius:4px; display:flex; align-items:center; justify-content:space-between; padding:0 12px; font-size:13px; color:#667085; }
+  .input svg { width:15px; height:15px; opacity:.55; }
+
+  .duration { font-size:12.5px; color:#3F3D56; margin:-6px 0 18px; }
+  .duration b { color:#29294C; }
+
+  .chk { display:flex; align-items:center; gap:9px; margin-bottom:14px; }
+  .box { width:16px; height:16px; border:1.5px solid #C7C7C7; border-radius:2px; background:#fff; }
+  .chk span { font-size:13px; color:#3F3D56; }
+
+  .kiosk { display:flex; gap:10px; padding:14px 4px 0; align-items:flex-start; }
+  .tog { width:36px; height:20px; border-radius:10px; background:#C7C7C7; position:relative; flex:none; margin-top:2px; }
+  .tog::after { content:''; position:absolute; width:16px; height:16px; border-radius:50%; background:#fff; top:2px; left:2px; }
+  .kiosk .kt { font-size:13.5px; font-weight:600; color:#29294C; }
+  .kiosk .kd { font-size:12px; color:#667085; margin-top:3px; line-height:1.5; text-align:justify; }
+
+  /* footer */
+  .foot { position:absolute; bottom:0; left:0; right:0; height:92px; background:#F9FAFB; display:flex; align-items:center; justify-content:space-between; padding:0 120px; }
+  .btn { height:42px; padding:0 22px; border-radius:4px; font-family:'Inter',sans-serif; font-size:14px; font-weight:600; display:flex; align-items:center; gap:8px; cursor:pointer; }
+  .btn.ghost { background:none; border:none; color:#29294C; }
+  .btn.solid { background:#29294C; border:none; color:#fff; }
+</style>
+</head>
+<body>
+  <div class="dlg-head">
+    <div class="l">
+      <div class="img"><svg viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3 8-8" stroke="#7F56D9" stroke-width="2" stroke-linecap="round"/><path d="M20 12v6a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h9" stroke="#7F56D9" stroke-width="2" stroke-linecap="round"/></svg></div>
+      <div class="t">Create Survey</div>
+    </div>
+    <button class="dlg-close">✕</button>
+  </div>
+
+  <div class="stepper">
+    <div class="step done"><div class="num">✓</div><div class="lbl">Build Your Survey</div></div>
+    <div class="conn"></div>
+    <div class="step active"><div class="num">2</div><div class="lbl">Scheduling</div></div>
+    <div class="conn"></div>
+    <div class="step"><div class="num">3</div><div class="lbl">Frequency</div></div>
+    <div class="conn"></div>
+    <div class="step"><div class="num">4</div><div class="lbl">Audience</div></div>
+    <div class="conn"></div>
+    <div class="step"><div class="num">5</div><div class="lbl">Email Invitation</div></div>
+    <div class="conn"></div>
+    <div class="step"><div class="num">6</div><div class="lbl">Preview/Launch</div></div>
+  </div>
+
+  <div class="content">
+    <div class="form-box">
+      <div class="card-title">SCHEDULING</div>
+      <p class="sub1">It is the length of time you want to run the survey, i.e. when the survey will start and when it will end.</p>
+      <p class="sub2">Scheduling enables you to automate the process of sending out surveys at the desired date and time. The survey will be active for the participants to attend during the selected duration.</p>
+
+      <div class="row">
+        <div class="field">
+          <label>Start Date</label>
+          <div class="input"><span>Select start date</span><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="16" rx="2" stroke="#667085" stroke-width="1.6"/><path d="M3 9h18M8 3v4M16 3v4" stroke="#667085" stroke-width="1.6"/></svg></div>
+        </div>
+        <div class="field">
+          <label>End Date</label>
+          <div class="input"><span>Select end date</span><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="16" rx="2" stroke="#667085" stroke-width="1.6"/><path d="M3 9h18M8 3v4M16 3v4" stroke="#667085" stroke-width="1.6"/></svg></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label>Time</label>
+          <div class="input"><span>09:00 AM</span><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#667085" stroke-width="1.6"/><path d="M12 7v5l3 2" stroke="#667085" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="field">
+          <label>Timezone</label>
+          <div class="input"><span>(GMT+05:30) Asia/Kolkata</span><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#667085" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        </div>
+      </div>
+
+      <p class="duration">Duration: <b>—</b></p>
+
+      <div class="chk"><div class="box"></div><span>Make this a recurring survey</span></div>
+
+      <div class="kiosk">
+        <div class="tog"></div>
+        <div>
+          <div class="kt">Enable Kiosk Survey</div>
+          <div class="kd">Kiosk mode allows employees without email addresses to attend the survey from a shared device. Enable this option if you want to run the survey in kiosk mode for your organization.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <button class="btn ghost">← Back</button>
+    <button class="btn solid">Next →</button>
+  </div>
+</body>
+</html>

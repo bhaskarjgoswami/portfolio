@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>After — Review &amp; launch</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { width:1600px; height:976px; overflow:hidden; font-family:'Inter',sans-serif; background:#f3f6fd; color:#1f2937; }
+
+  .glass-head { position:fixed; top:0; left:0; right:0; z-index:10; min-height:64px; padding:18px 32px;
+    background:rgba(243,246,253,.6); backdrop-filter:blur(12px) saturate(140%); display:flex; align-items:center; justify-content:center; box-shadow:0 1px 2px rgba(16,24,40,.05); }
+  .back { position:fixed; top:14px; left:20px; z-index:11; display:flex; align-items:center; gap:6px; border:none; background:none;
+    color:#5925dc; font-size:14px; font-weight:600; font-family:'Inter',sans-serif; cursor:pointer; padding:8px 12px; border-radius:8px; }
+  .stepper { display:flex; align-items:center; gap:12px; }
+  .st { display:flex; align-items:center; gap:8px; }
+  .st .dot { width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:600; border:1.5px solid #d0d5dd; color:#98a2b3; background:#fff; }
+  .st.done .dot { background:#ede9fe; border-color:#c4b5fd; color:#5925dc; }
+  .st.active .dot { background:#7f56d9; border-color:#7f56d9; color:#fff; }
+  .st .lbl { font-size:13px; font-weight:500; color:#98a2b3; white-space:nowrap; }
+  .st.active .lbl { color:#1f2937; font-weight:600; }
+  .st.done .lbl { color:#4b5563; }
+  .conn { width:38px; height:1.5px; background:#e5e7eb; border-radius:1px; }
+
+  .scroll { padding:104px 32px 110px; }
+  .shell { max-width:960px; margin:0 auto; background:#fff; border-radius:12px; padding:44px 150px; }
+  h3.title { font-size:20px; font-weight:600; color:#1f2937; margin-bottom:2px; }
+  .sub { font-size:14px; color:#9ca3af; margin-bottom:26px; }
+
+  .rev-head { display:grid; grid-template-columns:80px 1fr auto; gap:20px; align-items:center; margin-bottom:18px; }
+  .img { width:80px; height:80px; border-radius:12px; background:#faf8ff; display:flex; align-items:center; justify-content:center; }
+  .img svg { width:44px; height:44px; }
+  .k-cap { font-size:11px; font-weight:600; color:#9ca3af; text-transform:uppercase; letter-spacing:.06em; }
+  .name { font-size:18px; font-weight:600; color:#1f2937; margin-top:4px; }
+  .tags { display:flex; flex-direction:column; gap:8px; align-items:flex-end; }
+  .tagd { display:inline-flex; align-items:center; gap:7px; height:26px; padding:0 12px; background:#f2f4f7; border-radius:14px; font-size:12px; font-weight:500; color:#4b5563; }
+  .tagd::before { content:''; width:7px; height:7px; border-radius:50%; background:#6b7280; }
+
+  .row { display:grid; grid-template-columns:180px 1fr; gap:16px; padding:14px 0; border-bottom:1px solid #f3f4f6; }
+  .row:last-of-type { border-bottom:none; }
+  .row .k { font-size:13px; font-weight:500; color:#6b7280; }
+  .row .v { font-size:14px; font-weight:500; color:#1d2939; }
+
+  .info { margin-top:20px; border:1px solid #ece9fe; background:#faf8ff; border-radius:12px; padding:14px 16px; display:flex; gap:12px; align-items:flex-start; }
+  .info .dot-i { width:24px; height:24px; border-radius:50%; background:#ece9fe; color:#5b3bbf; font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; flex:none; }
+  .info p { font-size:13.5px; color:#374151; line-height:1.55; }
+
+  .glass-foot { position:fixed; bottom:0; left:0; right:0; z-index:10; padding:16px 32px;
+    background:rgba(243,246,253,.6); backdrop-filter:blur(12px) saturate(140%); display:flex; align-items:center; justify-content:space-between; }
+  .btn { height:42px; padding:0 22px; border-radius:8px; font-family:'Inter',sans-serif; font-size:14px; font-weight:600; display:flex; align-items:center; gap:8px; cursor:pointer; border:none; }
+  .btn.ghost { background:none; color:#5925dc; }
+  .btn.solid { background:#7f56d9; color:#fff; box-shadow:0 1px 2px rgba(16,24,40,.08); }
+</style>
+</head>
+<body>
+  <button class="back">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Back
+  </button>
+
+  <div class="glass-head">
+    <div class="stepper">
+      <div class="st done"><div class="dot">✓</div><div class="lbl">Set up</div></div>
+      <div class="conn"></div>
+      <div class="st done"><div class="dot">✓</div><div class="lbl">Audience</div></div>
+      <div class="conn"></div>
+      <div class="st done"><div class="dot">✓</div><div class="lbl">Questions</div></div>
+      <div class="conn"></div>
+      <div class="st done"><div class="dot">✓</div><div class="lbl">Email</div></div>
+      <div class="conn"></div>
+      <div class="st active"><div class="dot">5</div><div class="lbl">Review &amp; launch</div></div>
+    </div>
+  </div>
+
+  <div class="scroll">
+    <div class="shell">
+      <h3 class="title">Review &amp; launch</h3>
+      <p class="sub">Verify your setup before launching — you can still go back and edit any step.</p>
+
+      <div class="rev-head">
+        <div class="img">
+          <svg viewBox="0 0 48 48" fill="none">
+            <rect x="10" y="6" width="28" height="36" rx="4" fill="#fff" stroke="#c4b5fd" stroke-width="1.6"/>
+            <rect x="17" y="3" width="14" height="7" rx="2.5" fill="#7f56d9"/>
+            <path d="M16 18h10M16 25h16M16 32h12" stroke="#a78bfa" stroke-width="2.4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="k-cap">Survey name</div>
+          <div class="name">Q3 Engagement Pulse 2026</div>
+        </div>
+        <div class="tags">
+          <span class="tagd">Anonymous</span>
+          <span class="tagd">Kiosk enabled</span>
+        </div>
+      </div>
+
+      <div class="row"><span class="k">Duration</span><span class="v">14 days</span></div>
+      <div class="row"><span class="k">Start date</span><span class="v">14 Jul 2026, Tuesday</span></div>
+      <div class="row"><span class="k">End date</span><span class="v">28 Jul 2026, Tuesday</span></div>
+      <div class="row"><span class="k">Time</span><span class="v">09:00 AM (GMT+05:30)</span></div>
+      <div class="row"><span class="k">Frequency</span><span class="v">All at once</span></div>
+      <div class="row"><span class="k">Questions</span><span class="v">12 questions · ~3 mins to complete</span></div>
+      <div class="row"><span class="k">Target employees</span><span class="v">412 employees</span></div>
+
+      <div class="info">
+        <span class="dot-i">i</span>
+        <p>Once you launch, employees will be notified as scheduled. Responses are aggregated in your analytics dashboard in real time.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="glass-foot">
+    <button class="btn ghost">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back
+    </button>
+    <button class="btn solid">
+      Launch survey
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 15c-1 3-1 4-1 4s1 0 4-1c5-2 11-9 12-13 .2-.8-.2-1.2-1-1-4 1-11 6-14 11z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</body>
+</html>

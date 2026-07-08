@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Custom Survey Redesign - Bhaskar Jyoti Goswami</title>
+  <meta name="description" content="Redesigning the full custom survey creation flow - from a cramped 6-step dialog to a calm, five-step page with a live-preview question builder." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css?v=3" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='42' fill='%23C8553D'/></svg>" />
+</head>
+<body>
+  <div class="progress"></div>
+
+  <nav class="nav">
+    <a href="index.html" class="nav__brand"><span class="dot"></span> Bhaskar<span class="muted">.G</span></a>
+    <div class="nav__links">
+      <a href="index.html#top">Home</a>
+      <a href="index.html#work">Work</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#approach">Approach</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+    <a href="https://docs.google.com/document/d/1MnV4hA9-v-rK_mVla4tNzUMzqNDPpDWctYTQh0VfQiA/export?format=pdf" target="_blank" rel="noopener" class="nav__cta">Resume
+      <svg class="nav__cta-arrow" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1v9M4.5 6.5 8 10l3.5-3.5M2 13.5h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <button class="nav__toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </nav>
+
+  <!-- HERO -->
+  <header class="csx-hero">
+    <div class="wrap">
+      <a href="index.html#work" class="back"><svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M15 6H1M6 1L1 6l5 5" stroke="currentColor" stroke-width="1.4"/></svg> All work</a>
+      <div class="project__tags"><span class="tag">UI/UX Design</span><span class="tag">End-to-end flow</span><span class="tag">Design System</span></div>
+      <h1>Redesigning the custom survey flow, end to end.</h1>
+      <p class="sub">Creating a survey used to feel like filling out a government form inside a popup. I redesigned the entire journey - from the moment you click "create" to the moment you launch - into something calm, guided and honestly kind of fun. Drag the slider to compare.</p>
+
+      <!-- Before / After -->
+      <div class="ba reveal">
+        <span class="ba__side ba__side--l">Before</span>
+        <div class="ba__frame" data-ba>
+          <img src="assets/case/cs-after-setup.png" alt="Set up step after the redesign - tinted page, guided form with illustration" />
+          <div class="ba__top"><img src="assets/case/cs-before-schedule.png" alt="Scheduling step before the redesign - grey dialog with a wall of text" /></div>
+          <div class="ba__handle"></div>
+        </div>
+        <span class="ba__side ba__side--r">After</span>
+      </div>
+
+      <!-- Client / product intro -->
+      <div class="client-card reveal" style="text-align:left">
+        <div class="client-card__logo">Custom Survey<span class="muted-sub">Employee listening · HR SaaS</span></div>
+        <p>The custom survey builder is the heart of an employee-listening platform - it's where HR admins turn "we should ask people about this" into an actual survey. This case study covers how I redesigned that entire creation flow: the home page, all five steps, and every state in between.</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <!-- Objective -->
+    <section class="csx-row reveal">
+      <div class="csx-label">The objective</div>
+      <div class="cs-block__body">
+        <h2>Make creating a survey feel as considered as taking one.</h2>
+        <p>We'd spent months polishing the survey-taking experience for employees. But the admin who <em>creates</em> the survey was still fighting a cramped, six-step wizard trapped inside a dialog. The brief I set myself: rebuild the full flow on our design system, cut the ceremony, and let admins see what they're building while they build it.</p>
+        <p class="big-q">"The person creating the survey is a user too. They'd just never been treated like one."</p>
+        <div class="cs-meta" style="margin-top:34px">
+          <div><div class="k">Role</div><div class="v">UI/UX Designer</div></div>
+          <div><div class="k">Scope</div><div class="v">Full creation flow, 6 screens</div></div>
+          <div><div class="k">Team</div><div class="v">Design, Frontend, PM</div></div>
+          <div><div class="k">Tools</div><div class="v">Figma, Design tokens</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Problem -->
+    <section class="csx-row reveal">
+      <div class="csx-label">The problem</div>
+      <div class="cs-block__body">
+        <h2>A six-step wizard that shouted at you.</h2>
+        <p>I audited the old flow screen by screen, and the problems stacked up fast:</p>
+        <ul>
+          <li><strong>Trapped in a dialog</strong> - the whole journey lived inside a modal with its own header, close button and scroll areas. A six-step task deserved a page, not a popup.</li>
+          <li><strong>SCHEDULING. FREQUENCY. AUDIENCE.</strong> - headings in all caps, followed by dense justified paragraphs explaining what a word like "scheduling" means. The UI was shouting and over-explaining at the same time.</li>
+          <li><strong>Blind building</strong> - you picked questions from an accordion list and never saw what employees would actually experience. The first real look at your survey was after launch.</li>
+          <li><strong>Three different button systems</strong> on one journey - legacy dashboard buttons, old component buttons and new design-system buttons, each with its own shape and behaviour.</li>
+          <li><strong>Nothing was saved</strong> - close the dialog at step five and everything was gone. No drafts, no recovery, no mercy.</li>
+          <li><strong>Washed-lavender cards, 4px corners, fixed 770px widths</strong> - visual decisions from three different eras sharing one screen.</li>
+        </ul>
+        <p>None of these were bugs. Every screen "worked". That's exactly why it never got fixed - it was uncomfortable everywhere but broken nowhere.</p>
+      </div>
+    </section>
+
+    <!-- Approach -->
+    <section class="csx-row reveal">
+      <div class="csx-label">The approach</div>
+      <div class="cs-block__body">
+        <h2>Four rules before any pixels.</h2>
+        <p>Instead of restyling six screens, I set rules for the whole journey and let the screens fall out of them:</p>
+        <ul>
+          <li><strong>A page, not a popup.</strong> The flow gets the full viewport - a tinted surface, a frosted-glass header with the stepper, and content that scrolls underneath it.</li>
+          <li><strong>Five steps, honestly named.</strong> Scheduling and frequency aren't separate ideas - they're both "when". Merging them into <em>Set up</em> turned six steps into five: Set up → Audience → Questions → Email → Review &amp; launch.</li>
+          <li><strong>Show, don't explain.</strong> Every paragraph that explained what a step meant was replaced by a design that makes it obvious - and a live preview that shows the result.</li>
+          <li><strong>One design language.</strong> Every colour, radius, shadow and button comes from the design system. Zero hardcoded values, one button family, sentence case everywhere.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Home -->
+    <section class="csx-row reveal">
+      <div class="csx-label">The front door</div>
+      <div class="cs-block__body">
+        <h2>A home worth arriving at.</h2>
+        <p>The journey now starts on a bento-style home page instead of a menu. Each way of creating a survey - from scratch, from templates, with AI, lifecycle, exit - is a card with its own personality and a tiny animated vignette of what it does. Hover on "start from scratch" and the mock question's answer dots do a little wave.</p>
+        <div class="cs-figure fit"><img class="visual" src="assets/case/cs-after-home.png" alt="Create survey home - bento grid of five creation paths with recent templates below" /></div>
+        <p class="cs-figcap">The bento home: five creation paths, each with its own colour story, plus your recent templates one scroll below.</p>
+      </div>
+    </section>
+
+    <!-- Set up -->
+    <section class="csx-row reveal">
+      <div class="csx-label">Step 1 - Set up</div>
+      <div class="cs-block__body">
+        <h2>Three questions, one screen, zero lectures.</h2>
+        <p>What is it called, when does it run, how do questions arrive - the old flow spread this across three steps with a paragraph of theory on each. Now it's one calm screen. The illustration on the right isn't decoration-for-decoration's-sake: it's a quiet preview of the artifact you're creating, and it animates gently while you type.</p>
+        <p>Frequency options became cards you can compare at a glance - each with its own colour and a one-line consequence ("Everyone gets every question on day one") instead of a definition.</p>
+        <div class="cs-figure fit"><img class="visual" src="assets/case/cs-after-setup.png" alt="Set up step - name and description with illustration, schedule dates, colour-coded frequency cards" /></div>
+        <p class="cs-figcap">Set up merges the old Scheduling and Frequency steps. The stepper floats in a frosted-glass header; content scrolls beneath it.</p>
+      </div>
+    </section>
+
+    <!-- Audience -->
+    <section class="csx-row reveal">
+      <div class="csx-label">Step 2 - Audience</div>
+      <div class="cs-block__body">
+        <h2>Who's taking this? Now with an actual answer.</h2>
+        <p>Segments, email lists and CSV upload were already there - what was missing was feedback. The redesign adds selected segments as removable chips and, crucially, a live count: <em>"This survey will reach 412 employees."</em> Before, you found out your audience size after launch. If the audience drops below the anonymity threshold, a warning appears right there - not in a support ticket later.</p>
+        <div class="cs-figure fit"><img class="visual" src="assets/case/cs-after-audience.png" alt="Audience step - segment tabs, included segments as chips, live employee count banner" /></div>
+        <p class="cs-figcap">The count banner turns an invisible consequence into a visible one, at the exact moment you can still change your mind.</p>
+      </div>
+    </section>
+
+    <!-- Questions: before/after -->
+    <section class="csx-full reveal">
+      <div class="csx-label">Step 3 - Questions</div>
+      <h2>The builder became a workspace.</h2>
+      <div class="ba">
+        <span class="ba__side ba__side--l">Before</span>
+        <div class="ba__frame" data-ba>
+          <img src="assets/case/cs-after-questions.png" alt="Question builder after - three-panel workspace with question bank, selected questions and live preview" />
+          <div class="ba__top"><img src="assets/case/cs-before-questions.png" alt="Question builder before - checkbox categories and an accordion list" /></div>
+          <div class="ba__handle"></div>
+        </div>
+        <span class="ba__side ba__side--r">After</span>
+      </div>
+      <p class="cs-figcap">From a checkbox-and-accordion list to a three-panel workspace: browse the bank on the left, curate your set in the middle, and watch the survey render live on the right.</p>
+    </section>
+
+    <section class="csx-row reveal">
+      <div class="csx-label">Why it works</div>
+      <div class="cs-block__body">
+        <h2>You see what employees will see - while you're still deciding.</h2>
+        <p>This screen carried the whole redesign's thesis. The old builder made you assemble a survey through checkboxes and trust that it would come out fine. The new one is a workspace:</p>
+        <ul>
+          <li><strong>Question bank</strong> - searchable, grouped by category, with the question type (Rated 1-5, Multiple choice, Open-ended) visible on every card. One tap adds it.</li>
+          <li><strong>Selected questions</strong> - your actual survey, reorderable and expandable. Open a question to see its answer options, set it as mandatory, or require a comment. A running estimate ("4 questions · 3 mins to complete") keeps survey fatigue visible, and a warning appears if it gets too long.</li>
+          <li><strong>Live preview</strong> - a pixel-accurate rendition of the employee experience, updating as you build. It's collapsible, but it nudges you when it has something new to show.</li>
+        </ul>
+        <p>First-time users get two small coach marks - one pointing at categories, one at the preview - and then the interface gets out of the way.</p>
+      </div>
+    </section>
+
+    <!-- Email -->
+    <section class="csx-row reveal">
+      <div class="csx-label">Step 4 - Email</div>
+      <div class="cs-block__body">
+        <h2>Write the invite; preview it like an inbox.</h2>
+        <p>The old email step crammed editing and preview into one dark, split screen. Now editing gets the room, and the preview slides in as a drawer styled like a real email client - logo, greeting, body, the actual "Start Survey" button. You can send a test to yourself before committing 412 inboxes to it.</p>
+        <div class="cs-figure fit"><img class="visual" src="assets/case/cs-after-email.png" alt="Email step - edit card with subject, body and signature; preview drawer showing the rendered email" /></div>
+        <p class="cs-figcap">The preview drawer renders the invitation exactly as employees receive it - including the anonymity disclaimer.</p>
+      </div>
+    </section>
+
+    <!-- Review -->
+    <section class="csx-row reveal">
+      <div class="csx-label">Step 5 - Review &amp; launch</div>
+      <div class="cs-block__body">
+        <h2>A boarding pass, not a form.</h2>
+        <p>The last step reads like a summary you'd actually check: name, duration, dates, frequency, question count, audience size - one fact per row. A quiet info banner sets expectations for what happens after launch. And when you do launch, the confirmation celebrates inline with a small animation, instead of tossing you into a different page mid-moment.</p>
+        <div class="cs-figure fit"><img class="visual" src="assets/case/cs-after-review.png" alt="Review and launch step - survey summary rows with tags and launch button" /></div>
+        <p class="cs-figcap">Everything you chose, verifiable at a glance - with a purple "Launch survey" as the only loud element on the page.</p>
+      </div>
+    </section>
+
+    <!-- Craft details -->
+    <section class="csx-row reveal">
+      <div class="csx-label">The craft layer</div>
+      <div class="cs-block__body">
+        <h2>The details you feel more than see.</h2>
+        <ul>
+          <li><strong>Frosted-glass chrome</strong> - the stepper header and the action footer blur the content scrolling beneath them, so the flow feels like one continuous surface instead of stacked bars.</li>
+          <li><strong>Staggered entrances</strong> - every step fades its content up in a gentle 200ms cascade. Nothing pops; everything settles.</li>
+          <li><strong>Drafts, finally</strong> - the flow autosaves as you go, and your three latest drafts wait on the home page. Closing the tab is no longer a catastrophe.</li>
+          <li><strong>Zero hardcoded values</strong> - every colour, radius, spacing and shadow resolves to a design-system token. The flow ships with a lint gate that keeps it that way.</li>
+          <li><strong>Sentence case, everywhere</strong> - "Review &amp; launch", not "PREVIEW/LAUNCH". Small change, completely different tone of voice.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Results -->
+    <section class="csx-row reveal">
+      <div class="csx-label">The results</div>
+      <div class="cs-block__body">
+        <h2>Less ceremony, more confidence.</h2>
+        <p>The flow went from something admins endured to something they can move through in a couple of minutes - seeing exactly what they're about to send at every step.</p>
+        <div class="cs-outcomes">
+          <div class="cs-outcome"><div class="num">6 → 5</div><div class="lbl">Steps, with less to read on each</div></div>
+          <div class="cs-outcome"><div class="num">3 → 1</div><div class="lbl">Button systems unified on the DS</div></div>
+          <div class="cs-outcome"><div class="num">Live</div><div class="lbl">Preview while building, not after launch</div></div>
+        </div>
+        <p>The quieter win: the audience count, fatigue estimate and anonymity warning surface consequences <em>before</em> launch - the moments that used to generate support tickets now resolve themselves inside the flow.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Tools -->
+  <section class="tools reveal">
+    <div class="wrap">
+      <div class="project__tags" style="justify-content:center; margin-bottom:18px"><span class="tag">UI/UX Design</span><span class="tag">Design System</span></div>
+      <h2>Tools &amp; methods used in this project.</h2>
+      <div class="tools__chips">
+        <span class="tool-chip">Figma</span>
+        <span class="tool-chip">Design Tokens</span>
+        <span class="tool-chip">UX Audit</span>
+        <span class="tool-chip">Flow Mapping</span>
+        <span class="tool-chip">Micro-interactions</span>
+        <span class="tool-chip">Design Governance</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Takeaway quote -->
+  <section class="wrap" style="padding-block: clamp(44px,6.5vw,88px)">
+    <div class="csx-row reveal" style="border:none; padding-block:0">
+      <div class="csx-label">Takeaway</div>
+      <div class="quote-card">
+        <div class="quote-card__brand">Custom<br/>Survey<span class="muted-sub" style="display:block; font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-faint); margin-top:10px">Lessons learned</span></div>
+        <div>
+          <p class="quote-card__q">"The old flow wasn't broken - it was tolerated. That's the most dangerous state for a product to be in, because nobody files a ticket about it. Redesigning it taught me to treat 'it works' as the starting line, not the finish."</p>
+          <div class="quote-card__who">
+            <img src="assets/bhaskar.jpg" alt="Bhaskar Jyoti Goswami" />
+            <div><div class="n">Bhaskar Jyoti Goswami</div><div class="t">UI/UX Designer</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Next -->
+  <section class="cs-next">
+    <div class="wrap">
+      <span class="eyebrow">Next project</span>
+      <a href="case-certificate.html">Certificate Builder</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer__bottom" style="border:none">
+        <span>© <span data-year></span> Bhaskar Jyoti Goswami</span>
+        <a href="index.html#contact">bhaskarjgoswami@gmail.com</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js?v=3"></script>
+</body>
+</html>

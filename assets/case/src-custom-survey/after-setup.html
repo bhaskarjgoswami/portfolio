@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>After — Set up</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { width:1600px; height:976px; overflow:hidden; font-family:'Inter',sans-serif; background:#f3f6fd; color:#1f2937; }
+
+  /* frosted chrome */
+  .glass-head { position:fixed; top:0; left:0; right:0; z-index:10; min-height:64px; padding:18px 32px;
+    background:rgba(243,246,253,.6); backdrop-filter:blur(12px) saturate(140%); -webkit-backdrop-filter:blur(12px) saturate(140%);
+    display:flex; align-items:center; justify-content:center; box-shadow:0 1px 2px rgba(16,24,40,.05); }
+  .back { position:fixed; top:14px; left:20px; z-index:11; display:flex; align-items:center; gap:6px; border:none; background:none;
+    color:#5925dc; font-family:'Inter',sans-serif; font-size:14px; font-weight:600; cursor:pointer; padding:8px 12px; border-radius:8px; }
+
+  .stepper { display:flex; align-items:center; gap:12px; }
+  .st { display:flex; align-items:center; gap:8px; }
+  .st .dot { width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:600;
+    border:1.5px solid #d0d5dd; color:#98a2b3; background:#fff; }
+  .st.active .dot { background:#7f56d9; border-color:#7f56d9; color:#fff; }
+  .st .lbl { font-size:13px; font-weight:500; color:#98a2b3; white-space:nowrap; }
+  .st.active .lbl { color:#1f2937; font-weight:600; }
+  .conn { width:38px; height:1.5px; background:#e5e7eb; border-radius:1px; }
+
+  /* content */
+  .scroll { padding:104px 32px 110px; height:976px; overflow:hidden; }
+  .setup-shell { max-width:960px; margin:0 auto; display:flex; flex-direction:column; gap:28px; }
+
+  .setup-grid { display:grid; grid-template-columns:1.15fr .85fr; gap:40px; align-items:center; padding:40px; border-radius:12px;
+    background:radial-gradient(circle at 100% 0%, rgba(15,23,42,.05), transparent 55%), linear-gradient(160deg, #f9fafb, #ffffff 60%, #f3f4f6); }
+
+  h3.title { font-size:20px; font-weight:600; color:#1f2937; margin-bottom:4px; }
+  .sub { font-size:14px; color:#9ca3af; margin-bottom:24px; }
+
+  .fields { display:flex; flex-direction:column; gap:20px; }
+  .f label { display:block; font-size:12px; font-weight:500; color:#3f3d56; margin-bottom:6px; }
+  .f label .req { color:#f04438; }
+  .f label .opt { color:#b3aecc; }
+  .in { height:42px; background:#fff; border:1px solid #d0d5dd; border-radius:8px; display:flex; align-items:center; padding:0 14px; font-size:14px; color:#1f2937; }
+  .in.focus { border-color:#7f56d9; box-shadow:0 0 0 3px rgba(127,86,217,.12); }
+  .in.placeholder { color:#98a2b3; }
+  .ta { height:84px; background:#fff; border:1px solid #d0d5dd; border-radius:8px; padding:10px 14px; font-size:14px; color:#98a2b3; }
+
+  /* illustration */
+  .illu { display:flex; align-items:center; justify-content:center; }
+
+  /* schedule + frequency cards */
+  .section { background:#fff; border:1px solid #f3f4f6; border-radius:12px; padding:28px 32px; }
+  .section h4 { font-size:16px; font-weight:600; color:#1f2937; margin-bottom:2px; }
+  .section .s-sub { font-size:13px; color:#9ca3af; margin-bottom:18px; }
+  .row2 { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  .in .ic { margin-left:auto; display:flex; }
+  .in .ic svg { width:16px; height:16px; }
+
+  .freq-grid { display:grid; grid-template-columns:repeat(4, 1fr); gap:14px; }
+  .freq { border:1px solid #f3f4f6; border-radius:12px; padding:16px; cursor:pointer; background:#fff; }
+  .freq.sel { border-color:#c4b5fd; background:#faf8ff; box-shadow:0 0 0 3px rgba(127,86,217,.1); }
+  .freq .chip { width:34px; height:34px; border-radius:10px; display:flex; align-items:center; justify-content:center; margin-bottom:10px; }
+  .freq .chip svg { width:18px; height:18px; }
+  .freq .n { font-size:13.5px; font-weight:600; color:#1f2937; }
+  .freq .d { font-size:12px; color:#9ca3af; margin-top:3px; line-height:1.45; }
+  .c-purple { background:#ece9fe; } .c-blue { background:#e9f3ff; } .c-green { background:#ebfaf1; } .c-amber { background:#fef4e6; }
+
+  .glass-foot { position:fixed; bottom:0; left:0; right:0; z-index:10; padding:16px 32px;
+    background:rgba(243,246,253,.6); backdrop-filter:blur(12px) saturate(140%); -webkit-backdrop-filter:blur(12px) saturate(140%);
+    display:flex; align-items:center; justify-content:space-between; }
+  .btn { height:42px; padding:0 22px; border-radius:8px; font-family:'Inter',sans-serif; font-size:14px; font-weight:600; display:flex; align-items:center; gap:8px; cursor:pointer; border:none; }
+  .btn.ghost { background:none; color:#5925dc; }
+  .btn.solid { background:#7f56d9; color:#fff; box-shadow:0 1px 2px rgba(16,24,40,.08); }
+</style>
+</head>
+<body>
+  <button class="back">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Back
+  </button>
+
+  <div class="glass-head">
+    <div class="stepper">
+      <div class="st active"><div class="dot">1</div><div class="lbl">Set up</div></div>
+      <div class="conn"></div>
+      <div class="st"><div class="dot">2</div><div class="lbl">Audience</div></div>
+      <div class="conn"></div>
+      <div class="st"><div class="dot">3</div><div class="lbl">Questions</div></div>
+      <div class="conn"></div>
+      <div class="st"><div class="dot">4</div><div class="lbl">Email</div></div>
+      <div class="conn"></div>
+      <div class="st"><div class="dot">5</div><div class="lbl">Review &amp; launch</div></div>
+    </div>
+  </div>
+
+  <div class="scroll">
+    <div class="setup-shell">
+      <div class="setup-grid">
+        <div>
+          <h3 class="title">Create your survey</h3>
+          <p class="sub">Name your survey, add a short description, and choose when it goes out.</p>
+          <div class="fields">
+            <div class="f">
+              <label>Survey name <span class="req">*</span></label>
+              <div class="in focus">Q3 Engagement Pulse 2026</div>
+            </div>
+            <div class="f">
+              <label>Description <span class="opt">(optional)</span></label>
+              <div class="ta">Why are we running this survey?</div>
+            </div>
+          </div>
+        </div>
+        <div class="illu">
+          <svg viewBox="0 0 340 320" width="300" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="170" cy="160" rx="140" ry="130" fill="#ede9fe" opacity=".38"/>
+            <!-- clipboard -->
+            <g>
+              <rect x="100" y="52" width="150" height="200" rx="14" fill="#ffffff" stroke="#e4e7ec"/>
+              <rect x="138" y="40" width="74" height="24" rx="8" fill="#7f56d9"/>
+              <rect x="118" y="86" width="80" height="9" rx="4.5" fill="#d0d5dd"/>
+              <rect x="118" y="106" width="114" height="7" rx="3.5" fill="#e4e7ec"/>
+              <!-- progress -->
+              <rect x="118" y="128" width="114" height="8" rx="4" fill="#ede9fe"/>
+              <rect x="118" y="128" width="72" height="8" rx="4" fill="#7f56d9"/>
+              <!-- checked rows -->
+              <circle cx="126" cy="160" r="7" fill="#7f56d9"/><path d="M123 160l2.2 2.2 4-4.4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>
+              <rect x="140" y="156" width="82" height="8" rx="4" fill="#e4e7ec"/>
+              <circle cx="126" cy="184" r="7" fill="#7f56d9"/><path d="M123 184l2.2 2.2 4-4.4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>
+              <rect x="140" y="180" width="64" height="8" rx="4" fill="#e4e7ec"/>
+              <circle cx="126" cy="208" r="7" fill="#fff" stroke="#c4b5fd" stroke-width="1.6"/>
+              <rect x="140" y="204" width="74" height="8" rx="4" fill="#eef0f4"/>
+              <circle cx="126" cy="232" r="7" fill="#fff" stroke="#e4e7ec" stroke-width="1.6"/>
+              <rect x="140" y="228" width="54" height="8" rx="4" fill="#eef0f4"/>
+            </g>
+            <!-- floating chart card -->
+            <g>
+              <rect x="228" y="96" width="86" height="70" rx="12" fill="#fff" stroke="#e4e7ec"/>
+              <rect x="242" y="134" width="10" height="20" rx="3" fill="#c4b5fd"/>
+              <rect x="258" y="122" width="10" height="32" rx="3" fill="#a78bfa"/>
+              <rect x="274" y="112" width="10" height="42" rx="3" fill="#7f56d9"/>
+              <rect x="290" y="128" width="10" height="26" rx="3" fill="#ddd6fe"/>
+            </g>
+            <!-- floating profile chip -->
+            <g>
+              <rect x="34" y="120" width="92" height="34" rx="17" fill="#fff" stroke="#e4e7ec"/>
+              <circle cx="52" cy="137" r="10" fill="#ede9fe"/>
+              <circle cx="52" cy="134" r="3.4" fill="#7f56d9"/>
+              <path d="M45.5 143c1.4-3.4 4-5 6.5-5s5.1 1.6 6.5 5" fill="#7f56d9"/>
+              <rect x="68" y="130" width="46" height="6" rx="3" fill="#e4e7ec"/>
+              <rect x="68" y="140" width="30" height="5" rx="2.5" fill="#eef0f4"/>
+            </g>
+            <!-- sparkles -->
+            <path d="M64 78l2.6 6 6 2.6-6 2.6-2.6 6-2.6-6-6-2.6 6-2.6z" fill="#f79009"/>
+            <path d="M286 210l1.9 4.4 4.4 1.9-4.4 1.9-1.9 4.4-1.9-4.4-4.4-1.9 4.4-1.9z" fill="#c4b5fd"/>
+            <circle cx="88" cy="248" r="4" fill="#a78bfa" opacity=".7"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="section">
+        <h4>Schedule</h4>
+        <p class="s-sub">Choose when the survey opens and closes for your employees.</p>
+        <div class="row2">
+          <div class="f">
+            <label>Start date <span class="req">*</span></label>
+            <div class="in">14 Jul 2026 <span class="ic"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="16" rx="3" stroke="#9ca3af" stroke-width="1.6"/><path d="M3 9h18M8 3v4M16 3v4" stroke="#9ca3af" stroke-width="1.6"/></svg></span></div>
+          </div>
+          <div class="f">
+            <label>End date <span class="req">*</span></label>
+            <div class="in">28 Jul 2026 <span class="ic"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="16" rx="3" stroke="#9ca3af" stroke-width="1.6"/><path d="M3 9h18M8 3v4M16 3v4" stroke="#9ca3af" stroke-width="1.6"/></svg></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h4>Frequency</h4>
+        <p class="s-sub">Decide how questions reach people over the survey window.</p>
+        <div class="freq-grid">
+          <div class="freq sel">
+            <div class="chip c-purple"><svg viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" fill="#7f56d9"/></svg></div>
+            <div class="n">All at once</div>
+            <div class="d">Everyone gets every question on day one.</div>
+          </div>
+          <div class="freq">
+            <div class="chip c-blue"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#026aa2" stroke-width="1.8"/><path d="M12 7v5l3 2" stroke="#026aa2" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+            <div class="n">Daily</div>
+            <div class="d">A few questions delivered each day.</div>
+          </div>
+          <div class="freq">
+            <div class="chip c-green"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="16" rx="3" stroke="#039855" stroke-width="1.8"/><path d="M3 9h18M8 3v4M16 3v4" stroke="#039855" stroke-width="1.8"/></svg></div>
+            <div class="n">Weekly</div>
+            <div class="d">A short set every week of the window.</div>
+          </div>
+          <div class="freq">
+            <div class="chip c-amber"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3v18M3 12h18" stroke="#f79009" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="#f79009" stroke-width="1.8"/></svg></div>
+            <div class="n">Monthly</div>
+            <div class="d">Spread across each month, lightest touch.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="glass-foot">
+    <button class="btn ghost">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back
+    </button>
+    <button class="btn solid">Continue
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</body>
+</html>

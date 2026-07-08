@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Before — Custom survey builder</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { width:1600px; height:976px; overflow:hidden; font-family:'Inter',sans-serif; background:#F9FAFB; color:#29294C; }
+
+  .dlg-head { height:64px; background:#fff; border-bottom:1px solid #E4E7EC; display:flex; align-items:center; justify-content:space-between; padding:0 28px; }
+  .dlg-head .l { display:flex; align-items:center; gap:14px; }
+  .dlg-head .img { width:36px; height:36px; border-radius:4px; background:#EDE9FE; display:flex; align-items:center; justify-content:center; }
+  .dlg-head .img svg { width:20px; height:20px; }
+  .dlg-head .t { font-size:17px; font-weight:700; }
+  .dlg-close { width:32px; height:32px; border:none; background:none; color:#667085; font-size:20px; cursor:pointer; }
+
+  .stepper { display:flex; align-items:center; justify-content:center; gap:10px; padding:22px 0 18px; background:#fff; border-bottom:1px solid #EEF0F4; }
+  .step { display:flex; align-items:center; gap:8px; }
+  .step .num { width:26px; height:26px; border-radius:50%; border:1.5px solid #C7C7C7; color:#98A2B3; font-size:12px; font-weight:600; display:flex; align-items:center; justify-content:center; background:#fff; }
+  .step.active .num { border-color:#29294C; color:#29294C; }
+  .step .lbl { font-size:12.5px; color:#98A2B3; font-weight:500; white-space:nowrap; }
+  .step.active .lbl { color:#29294C; font-weight:600; }
+  .conn { width:46px; height:1px; background:#D5DADD; }
+
+  .content { padding:34px 120px 0; }
+
+  .head-row { display:flex; gap:24px; margin-bottom:26px; }
+  .head-l { width:70%; }
+  .head-r { width:30%; }
+  .sec-label { font-size:12.5px; color:#667085; font-weight:400; margin-bottom:8px; }
+  .input { width:50%; height:40px; background:#fff; border:1px solid #C7C7C7; border-radius:4px; display:flex; align-items:center; padding:0 12px; font-size:13px; color:#98A2B3; }
+  .count-tag { display:inline-flex; align-items:center; height:26px; padding:0 12px; background:#EEF0F4; border-radius:14px; font-size:12.5px; font-weight:600; color:#3F3D56; }
+
+  .main { display:flex; }
+  .cats { width:33%; padding-right:24px; }
+  .cats .sec-label { margin-bottom:20px; }
+  .cat { display:flex; align-items:center; gap:10px; margin-bottom:16px; }
+  .box { width:16px; height:16px; border:1.5px solid #C7C7C7; border-radius:2px; background:#fff; flex:none; }
+  .box.on { background:#29294C; border-color:#29294C; position:relative; }
+  .box.on::after { content:'✓'; color:#fff; font-size:11px; position:absolute; top:0px; left:2.5px; }
+  .cat span { font-size:13.5px; color:#3F3D56; }
+  .cat i { font-style:normal; font-size:12px; color:#98A2B3; }
+
+  .qs { width:67%; }
+  .panel { background:#fff; border:1px solid #EEF0F4; }
+  .q { display:flex; align-items:center; height:66px; border-bottom:1px solid #EEF0F4; padding:0 18px; gap:14px; }
+  .q:last-child { border-bottom:none; }
+  .chev { color:#667085; font-size:11px; flex:none; }
+  .q .txt { flex:1; font-size:13.5px; color:#29294C; }
+  .q .tag { font-size:11px; color:#667085; background:#F6F6FC; border:1px solid #EEF0F4; padding:3px 10px; border-radius:12px; white-space:nowrap; }
+  .add { width:26px; height:26px; border-radius:50%; background:#F6F6FC; border:1px solid #E4E7EC; display:flex; align-items:center; justify-content:center; flex:none; color:#48465B; font-size:14px; }
+  .add.on { background:#29294C; border-color:#29294C; color:#fff; }
+
+  .foot { position:absolute; bottom:0; left:0; right:0; height:88px; background:#F9FAFB; display:flex; align-items:center; justify-content:space-between; padding:0 120px; }
+  .btn { height:42px; padding:0 22px; border-radius:4px; font-family:'Inter',sans-serif; font-size:14px; font-weight:600; display:flex; align-items:center; gap:8px; cursor:pointer; }
+  .btn.ghost { background:none; border:none; color:#29294C; }
+  .btn.solid { background:#29294C; border:none; color:#fff; }
+</style>
+</head>
+<body>
+  <div class="dlg-head">
+    <div class="l">
+      <div class="img"><svg viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3 8-8" stroke="#7F56D9" stroke-width="2" stroke-linecap="round"/><path d="M20 12v6a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h9" stroke="#7F56D9" stroke-width="2" stroke-linecap="round"/></svg></div>
+      <div class="t">Create Survey</div>
+    </div>
+    <button class="dlg-close">✕</button>
+  </div>
+
+  <div class="stepper">
+    <div class="step active"><div class="num">1</div><div class="lbl">Build Your Survey</div></div>
+    <div class="conn"></div>
+    <div class="step"><div class="num">2</div><div class="lbl">Scheduling</div></div>
+    <div class="conn"></div>
+    <div class="step"><div class="num">3</div><div class="lbl">Frequency</div></div>
+    <div class="conn"></div>
+    <div class="step"><div class="num">4</div><div class="lbl">Audience</div></div>
+    <div class="conn"></div>
+    <div class="step"><div class="num">5</div><div class="lbl">Email Invitation</div></div>
+    <div class="conn"></div>
+    <div class="step"><div class="num">6</div><div class="lbl">Preview/Launch</div></div>
+  </div>
+
+  <div class="content">
+    <div class="head-row">
+      <div class="head-l">
+        <div class="sec-label">Survey Name</div>
+        <div class="input">Enter survey name</div>
+      </div>
+      <div class="head-r">
+        <div class="sec-label">Questions Included</div>
+        <span class="count-tag">0 Questions</span>
+      </div>
+    </div>
+
+    <div class="main">
+      <div class="cats">
+        <div class="sec-label">Categories</div>
+        <div class="cat"><div class="box on"></div><span>Engagement</span> <i>(12)</i></div>
+        <div class="cat"><div class="box on"></div><span>Manager Effectiveness</span> <i>(8)</i></div>
+        <div class="cat"><div class="box"></div><span>Wellbeing</span> <i>(9)</i></div>
+        <div class="cat"><div class="box"></div><span>Recognition</span> <i>(6)</i></div>
+        <div class="cat"><div class="box"></div><span>Career Growth</span> <i>(7)</i></div>
+        <div class="cat"><div class="box"></div><span>Communication</span> <i>(5)</i></div>
+        <div class="cat"><div class="box"></div><span>Work-Life Balance</span> <i>(6)</i></div>
+      </div>
+
+      <div class="qs">
+        <div class="sec-label" style="margin-bottom:14px">Showing 20 questions from 2 categories</div>
+        <div class="panel">
+          <div class="q"><span class="chev">▾</span><span class="txt">I feel motivated to go beyond what is expected of me at work.</span><span class="tag">Engagement</span><div class="add on">✕</div></div>
+          <div class="q"><span class="chev">▸</span><span class="txt">I would recommend this company as a great place to work.</span><span class="tag">Engagement</span><div class="add">+</div></div>
+          <div class="q"><span class="chev">▸</span><span class="txt">I see myself still working here in two years' time.</span><span class="tag">Engagement</span><div class="add">+</div></div>
+          <div class="q"><span class="chev">▸</span><span class="txt">My manager gives me actionable feedback on a regular basis.</span><span class="tag">Manager Effectiveness</span><div class="add on">✕</div></div>
+          <div class="q"><span class="chev">▸</span><span class="txt">My manager keeps me informed about what is happening in the company.</span><span class="tag">Manager Effectiveness</span><div class="add">+</div></div>
+          <div class="q"><span class="chev">▸</span><span class="txt">The leaders at this company have communicated a vision that motivates me.</span><span class="tag">Engagement</span><div class="add">+</div></div>
+          <div class="q"><span class="chev">▸</span><span class="txt">My manager genuinely cares about my wellbeing.</span><span class="tag">Manager Effectiveness</span><div class="add">+</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <button class="btn ghost">← Back</button>
+    <button class="btn solid">Next →</button>
+  </div>
+</body>
+</html>

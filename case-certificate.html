@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Certificate Builder (DIY) - Bhaskar Jyoti Goswami</title>
+  <meta name="description" content="A self-service certificate creation tool inside the HR dashboard - from external-tool chaos to a branded three-step wizard." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css?v=3" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='42' fill='%23C8553D'/></svg>" />
+</head>
+<body>
+  <div class="progress"></div>
+
+  <nav class="nav">
+    <a href="index.html" class="nav__brand"><span class="dot"></span> Bhaskar<span class="muted">.G</span></a>
+    <div class="nav__links">
+      <a href="index.html#top">Home</a>
+      <a href="index.html#work">Work</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#approach">Approach</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+    <a href="https://docs.google.com/document/d/1MnV4hA9-v-rK_mVla4tNzUMzqNDPpDWctYTQh0VfQiA/export?format=pdf" target="_blank" rel="noopener" class="nav__cta">Resume
+      <svg class="nav__cta-arrow" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1v9M4.5 6.5 8 10l3.5-3.5M2 13.5h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <button class="nav__toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </nav>
+
+  <!-- HERO -->
+  <header class="csx-hero">
+    <div class="wrap">
+      <a href="index.html#work" class="back"><svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M15 6H1M6 1L1 6l5 5" stroke="currentColor" stroke-width="1.4"/></svg> All work</a>
+      <div class="project__tags"><span class="tag">Product Design</span><span class="tag">DIY Tool</span><span class="tag">B2B HR</span></div>
+      <h1>A DIY certificate builder people enjoy.</h1>
+      <p class="sub">HR admins were bouncing out to Canva and hand-edited Word templates every time they needed an employee certificate. I designed a self-service tool right inside the dashboard: pick a template, fill the fields, export. Done.</p>
+
+      <div class="csx-cover reveal">
+        <img src="assets/case/cert-hero.png" alt="Certificate creation tool inside the HR dashboard" />
+      </div>
+
+      <!-- Client intro -->
+      <div class="client-card reveal" style="text-align:left">
+        <div class="client-card__logo">Kuno<span class="muted-sub">B2B HR &amp; recognition platform</span></div>
+        <p>An employee engagement platform where HR administrators run recognition programs end to end. Certificates were the one asset still living outside the product - in external tools, with formatting headaches and hours lost every week.</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <!-- Objective -->
+    <section class="csx-row reveal">
+      <div class="csx-label">The objective</div>
+      <div class="cs-block__body">
+        <h2>Branded certificates in minutes, without leaving the dashboard.</h2>
+        <p>The brief cut both ways: <strong>user goal</strong> - build certificates quickly and independently; <strong>business goal</strong> - boost DIY adoption and reduce support dependency.</p>
+        <p class="big-q">“A blank canvas is intimidating. A great starting point is basically an invitation.”</p>
+        <div class="cs-meta" style="margin-top:34px">
+          <div><div class="k">Role</div><div class="v">Product / UX Designer</div></div>
+          <div><div class="k">Type</div><div class="v">DIY editor / builder</div></div>
+          <div><div class="k">Users</div><div class="v">HR administrators</div></div>
+          <div><div class="k">Tools</div><div class="v">Figma, Prototyping</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Research -->
+    <section class="csx-row reveal">
+      <div class="csx-label">The research</div>
+      <div class="cs-block__body">
+        <h2>Three interviews, one very consistent story.</h2>
+        <p><strong>User interviews.</strong> I interviewed three HR administrators:</p>
+        <ul>
+          <li>Formatting was the top pain - getting layouts right in Word or Canva ate up time and patience.</li>
+          <li>Time delays: a “simple certificate” routinely turned into an afternoon.</li>
+          <li>They preferred a simple step-by-step creation flow over advanced, free-form design tools.</li>
+        </ul>
+        <p><strong>Competitive benchmarking.</strong> I reviewed Canva, Xoxoday and Bonusly - and found a clear gap for an integrated, branded, DIY certificate tool in the B2B HR space.</p>
+      </div>
+    </section>
+
+    <!-- Solution -->
+    <section class="csx-row reveal">
+      <div class="csx-label">The solution</div>
+      <div class="cs-block__body">
+        <h2>Not another canvas editor - a guided three-step wizard.</h2>
+        <p><strong>Select Template → Fill Fields → Preview &amp; Export.</strong> That single reframe removed most of the anxiety. Initial lo-fi explorations tested the flow before any visual polish:</p>
+        <div class="cs-two">
+          <div class="cs-figure fit"><img class="visual" src="assets/case/cert-wireframe-1.png" alt="Lo-fi wireframe - template selection step" /></div>
+          <div class="cs-figure fit"><img class="visual" src="assets/case/cert-wireframe-2.png" alt="Lo-fi wireframe - fill fields and preview steps" /></div>
+        </div>
+        <p>Key design moves that survived from wireframe to ship:</p>
+        <ul>
+          <li><strong>Real-time preview pane</strong> - see the change instantly; what you see is exactly what exports.</li>
+          <li><strong>Drag-and-drop logo positioning</strong> - brand placement without fiddly coordinates.</li>
+          <li><strong>Brand-first customisation</strong> - fonts and colours scoped to the company's brand, so it's hard to make something ugly.</li>
+          <li><strong>Export as PDF, Save as Template, Duplicate Certificate</strong> - the second certificate takes seconds, not another afternoon.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Final designs -->
+    <section class="csx-row reveal">
+      <div class="csx-label">Final designs</div>
+      <div class="cs-block__body">
+        <h2>The shipped flow, screen by screen.</h2>
+        <p>Template gallery, guided editing with live preview, and export. Click any screen to view it fullscreen.</p>
+        <div class="cs-gallery">
+          <div class="cs-figure fit"><img class="visual" src="assets/case/cert-final-01.png" alt="Certificate builder - template selection" loading="lazy" /></div>
+          <div class="cs-figure fit"><img class="visual" src="assets/case/cert-final-02.png" alt="Certificate builder - create certificate with element list" loading="lazy" /></div>
+          <div class="cs-figure fit"><img class="visual" src="assets/case/cert-final-03.png" alt="Certificate builder - background upload" loading="lazy" /></div>
+          <div class="cs-figure fit"><img class="visual" src="assets/case/cert-final-04.png" alt="Certificate builder - adjust image position and size" loading="lazy" /></div>
+          <div class="cs-figure fit"><img class="visual" src="assets/case/cert-final-05.png" alt="Certificate builder - text formatting" loading="lazy" /></div>
+          <div class="cs-figure fit"><img class="visual" src="assets/case/cert-final-06.png" alt="Certificate builder - element arrangement" loading="lazy" /></div>
+          <div class="cs-figure fit"><img class="visual" src="assets/case/cert-final-07.png" alt="Certificate builder - live preview" loading="lazy" /></div>
+          <div class="cs-figure fit"><img class="visual" src="assets/case/cert-final-08.png" alt="Certificate builder - certificate details" loading="lazy" /></div>
+          <div class="cs-figure fit"><img class="visual" src="assets/case/cert-final-09.png" alt="Certificate builder - save as template" loading="lazy" /></div>
+          <div class="cs-figure fit"><img class="visual" src="assets/case/cert-final-10.png" alt="Certificate builder - final certificate preview" loading="lazy" /></div>
+          <div class="cs-figure fit"><img class="visual" src="assets/case/cert-final-11.png" alt="Certificate builder - export options" loading="lazy" /></div>
+          <div class="cs-figure fit"><img class="visual" src="assets/case/cert-final-12.png" alt="Certificate builder - export confirmation" loading="lazy" /></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results -->
+    <section class="csx-row reveal">
+      <div class="csx-label">The results</div>
+      <div class="cs-block__body">
+        <h2>Tested with HR, adopted in weeks.</h2>
+        <p>Internal testing with two HR representatives caught the last rough edges - we added tooltips and improved preview clarity before launch. Then the numbers spoke:</p>
+        <div class="cs-outcomes">
+          <div class="cs-outcome"><div class="num">30+</div><div class="lbl">Certificates created in the first two weeks</div></div>
+          <div class="cs-outcome"><div class="num">3–5 hrs</div><div class="lbl">Saved weekly, per HR administrator</div></div>
+          <div class="cs-outcome"><div class="num">2</div><div class="lbl">Enterprise accounts with explicitly positive feedback</div></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Tools -->
+  <section class="tools reveal">
+    <div class="wrap">
+      <div class="project__tags" style="justify-content:center; margin-bottom:18px"><span class="tag">Product Design</span><span class="tag">B2B HR</span></div>
+      <h2>Tools used in this project.</h2>
+      <div class="tools__chips">
+        <span class="tool-chip">Figma</span>
+        <span class="tool-chip">Prototyping</span>
+        <span class="tool-chip">User Interviews</span>
+        <span class="tool-chip">Competitive Benchmarking</span>
+        <span class="tool-chip">Usability Testing</span>
+        <span class="tool-chip">Microcopy</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Takeaway quote -->
+  <section class="wrap" style="padding-block: clamp(44px,6.5vw,88px)">
+    <div class="csx-row reveal" style="border:none; padding-block:0">
+      <div class="csx-label">Takeaway</div>
+      <div class="quote-card">
+        <div class="quote-card__brand">Certificate<br/>Builder<span class="muted-sub" style="display:block; font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-faint); margin-top:10px">Lessons learned</span></div>
+        <div>
+          <p class="quote-card__q">“The biggest usability win wasn't a new control - it was changing where the journey starts. Meeting people with a great template instead of a blank page did more than any single feature could.”</p>
+          <div class="quote-card__who">
+            <img src="assets/bhaskar.jpg" alt="Bhaskar Jyoti Goswami" />
+            <div><div class="n">Bhaskar Jyoti Goswami</div><div class="t">Product / UX Designer</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Next -->
+  <section class="cs-next">
+    <div class="wrap">
+      <span class="eyebrow">Next project</span>
+      <a href="case-fintax.html">GCC FinTax App</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer__bottom" style="border:none">
+        <span>© <span data-year></span> Bhaskar Jyoti Goswami</span>
+        <a href="index.html#contact">bhaskarjgoswami@gmail.com</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js?v=3"></script>
+</body>
+</html>

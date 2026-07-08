@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>After — Audience</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { width:1600px; height:976px; overflow:hidden; font-family:'Inter',sans-serif; background:#f3f6fd; color:#1f2937; }
+
+  .glass-head { position:fixed; top:0; left:0; right:0; z-index:10; min-height:64px; padding:18px 32px;
+    background:rgba(243,246,253,.6); backdrop-filter:blur(12px) saturate(140%); display:flex; align-items:center; justify-content:center; box-shadow:0 1px 2px rgba(16,24,40,.05); }
+  .back { position:fixed; top:14px; left:20px; z-index:11; display:flex; align-items:center; gap:6px; border:none; background:none;
+    color:#5925dc; font-size:14px; font-weight:600; font-family:'Inter',sans-serif; cursor:pointer; padding:8px 12px; border-radius:8px; }
+  .stepper { display:flex; align-items:center; gap:12px; }
+  .st { display:flex; align-items:center; gap:8px; }
+  .st .dot { width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:600; border:1.5px solid #d0d5dd; color:#98a2b3; background:#fff; }
+  .st.done .dot { background:#ede9fe; border-color:#c4b5fd; color:#5925dc; }
+  .st.active .dot { background:#7f56d9; border-color:#7f56d9; color:#fff; }
+  .st .lbl { font-size:13px; font-weight:500; color:#98a2b3; white-space:nowrap; }
+  .st.active .lbl { color:#1f2937; font-weight:600; }
+  .st.done .lbl { color:#4b5563; }
+  .conn { width:38px; height:1.5px; background:#e5e7eb; border-radius:1px; }
+
+  .scroll { padding:112px 32px 110px; }
+  .shell { max-width:960px; margin:0 auto; background:#fff; border-radius:12px; padding:50px 150px; display:flex; flex-direction:column; gap:20px; }
+  h3.title { font-size:20px; font-weight:600; color:#1f2937; margin-bottom:2px; }
+  .sub { font-size:14px; color:#9ca3af; }
+
+  .tabs { display:flex; gap:4px; border-bottom:1.5px solid #eef0f4; margin-top:6px; }
+  .tab { padding:10px 16px; font-size:14px; font-weight:500; color:#6b7280; border-bottom:2px solid transparent; margin-bottom:-1.5px; cursor:pointer; }
+  .tab.on { color:#5925dc; font-weight:600; border-bottom-color:#7f56d9; }
+
+  .f label { display:block; font-size:12px; font-weight:500; color:#3f3d56; margin-bottom:6px; }
+  .sel { height:42px; background:#fff; border:1px solid #d0d5dd; border-radius:8px; display:flex; align-items:center; justify-content:space-between; padding:0 14px; font-size:14px; color:#1f2937; }
+  .sel .ph { color:#98a2b3; }
+  .sel svg { width:16px; height:16px; }
+  .chips { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
+  .chip { display:inline-flex; align-items:center; gap:6px; height:28px; padding:0 12px; background:#faf8ff; border:1px solid #ece9fe; color:#5b3bbf; border-radius:14px; font-size:12.5px; font-weight:500; }
+  .chip .x { color:#a78bfa; font-size:13px; }
+
+  .hint { font-size:12.5px; color:#9ca3af; font-style:italic; line-height:1.55; }
+
+  .banner { display:flex; align-items:center; gap:10px; padding:12px 16px; font-size:13px; color:#3538cd; background:#eef4ff; border:1px solid #c7d7fe; border-radius:12px; }
+  .banner b { font-weight:600; }
+  .banner svg { width:16px; height:16px; flex:none; }
+
+  .glass-foot { position:fixed; bottom:0; left:0; right:0; z-index:10; padding:16px 32px;
+    background:rgba(243,246,253,.6); backdrop-filter:blur(12px) saturate(140%); display:flex; align-items:center; justify-content:space-between; }
+  .btn { height:42px; padding:0 22px; border-radius:8px; font-family:'Inter',sans-serif; font-size:14px; font-weight:600; display:flex; align-items:center; gap:8px; cursor:pointer; border:none; }
+  .btn.ghost { background:none; color:#5925dc; }
+  .btn.solid { background:#7f56d9; color:#fff; box-shadow:0 1px 2px rgba(16,24,40,.08); }
+</style>
+</head>
+<body>
+  <button class="back">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Back
+  </button>
+
+  <div class="glass-head">
+    <div class="stepper">
+      <div class="st done"><div class="dot">✓</div><div class="lbl">Set up</div></div>
+      <div class="conn"></div>
+      <div class="st active"><div class="dot">2</div><div class="lbl">Audience</div></div>
+      <div class="conn"></div>
+      <div class="st"><div class="dot">3</div><div class="lbl">Questions</div></div>
+      <div class="conn"></div>
+      <div class="st"><div class="dot">4</div><div class="lbl">Email</div></div>
+      <div class="conn"></div>
+      <div class="st"><div class="dot">5</div><div class="lbl">Review &amp; launch</div></div>
+    </div>
+  </div>
+
+  <div class="scroll">
+    <div class="shell">
+      <div>
+        <h3 class="title">Pick your audience</h3>
+        <p class="sub">Decide who takes this survey — everyone, specific segments, or a custom list.</p>
+      </div>
+
+      <div class="tabs">
+        <div class="tab on">Target by segments</div>
+        <div class="tab">Target by email</div>
+        <div class="tab">Upload CSV</div>
+      </div>
+
+      <div class="f">
+        <label>Included segments</label>
+        <div class="sel">Engineering · Bengaluru <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#9ca3af" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <div class="chips">
+          <span class="chip">Engineering <span class="x">✕</span></span>
+          <span class="chip">Bengaluru <span class="x">✕</span></span>
+          <span class="chip">Full-time <span class="x">✕</span></span>
+        </div>
+      </div>
+
+      <div class="f">
+        <label>Excluded segments</label>
+        <div class="sel"><span class="ph">Select segments to exclude</span> <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#9ca3af" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+      </div>
+
+      <p class="hint">Please note that the survey will be sent to all participants if you do not select options from the "Included" and "Excluded" dropdown menus.</p>
+    </div>
+
+    <div style="max-width:960px; margin:16px auto 0;">
+      <div class="banner">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M16 19v-1a4 4 0 00-4-4H7a4 4 0 00-4 4v1" stroke="#3538cd" stroke-width="1.8" stroke-linecap="round"/><circle cx="9.5" cy="7.5" r="3.5" stroke="#3538cd" stroke-width="1.8"/><path d="M21 19v-1a4 4 0 00-2.5-3.7M15.5 4.3a3.5 3.5 0 010 6.4" stroke="#3538cd" stroke-width="1.8" stroke-linecap="round"/></svg>
+        This survey will reach <b>&nbsp;412 employees&nbsp;</b> based on your current selection.
+      </div>
+    </div>
+  </div>
+
+  <div class="glass-foot">
+    <button class="btn ghost">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back
+    </button>
+    <button class="btn solid">Continue
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</body>
+</html>

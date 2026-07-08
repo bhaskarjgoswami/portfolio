@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Design System - Bhaskar Jyoti Goswami</title>
+  <meta name="description" content="Building a scalable design system for an admin dashboard: tokens, components and governance that reduced design debt and sped up delivery." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css?v=3" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='42' fill='%23C8553D'/></svg>" />
+</head>
+<body>
+  <div class="progress"></div>
+
+  <nav class="nav">
+    <a href="index.html" class="nav__brand"><span class="dot"></span> Bhaskar<span class="muted">.G</span></a>
+    <div class="nav__links">
+      <a href="index.html#top">Home</a>
+      <a href="index.html#work">Work</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#approach">Approach</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+    <a href="https://docs.google.com/document/d/1MnV4hA9-v-rK_mVla4tNzUMzqNDPpDWctYTQh0VfQiA/export?format=pdf" target="_blank" rel="noopener" class="nav__cta">Resume
+      <svg class="nav__cta-arrow" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1v9M4.5 6.5 8 10l3.5-3.5M2 13.5h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <button class="nav__toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </nav>
+
+  <!-- HERO -->
+  <header class="csx-hero">
+    <div class="wrap">
+      <a href="index.html#work" class="back"><svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M15 6H1M6 1L1 6l5 5" stroke="currentColor" stroke-width="1.4"/></svg> All work</a>
+      <div class="project__tags"><span class="tag">Design System</span><span class="tag">Components</span><span class="tag">Tokens</span></div>
+      <h1>Making our admin dashboard consistent again.</h1>
+      <p class="sub">A design system that killed the design debt, got designers and developers on the same page, and let the product ship way faster. Drag the slider to compare.</p>
+
+      <!-- Before / After -->
+      <div class="ba reveal">
+        <span class="ba__side ba__side--l">Before</span>
+        <div class="ba__frame" data-ba>
+          <img src="assets/case/ds-overview-after.png" alt="Overview dashboard after the design system" />
+          <div class="ba__top"><img src="assets/case/ds-overview-before.png" alt="Overview dashboard before the design system" /></div>
+          <div class="ba__handle"></div>
+        </div>
+        <span class="ba__side ba__side--r">After</span>
+      </div>
+
+      <!-- Client / product intro -->
+      <div class="client-card reveal" style="text-align:left">
+        <div class="client-card__logo">Admin Dashboard<span class="muted-sub">Enterprise SaaS platform</span></div>
+        <p>This case study covers how I built a design system for our admin dashboard - the goal was to fix design inconsistencies, speed up work for designers and developers, and make the user experience consistent for everyone who runs their business on it.</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <!-- Objective -->
+    <section class="csx-row reveal">
+      <div class="csx-label">The objective</div>
+      <div class="cs-block__body">
+        <h2>Stop making the same decision twice - one source of truth for design and code.</h2>
+        <p>The product grew, and the inconsistencies grew right along with it. Three designers, one button, four different versions. Engineers rebuilding the same card from scratch every single screen. The whole UI was quietly drifting apart - so I led building a living language of tokens, components and rules that design <em>and</em> engineering could actually trust.</p>
+        <div class="cs-meta" style="margin-top:34px">
+          <div><div class="k">Role</div><div class="v">Senior UI/UX Designer</div></div>
+          <div><div class="k">Scope</div><div class="v">UI/UX, design system, component library</div></div>
+          <div><div class="k">Team</div><div class="v">Design, Frontend, PM</div></div>
+          <div><div class="k">Tools</div><div class="v">Figma, Tokens, FigJam</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Problem -->
+    <section class="csx-row reveal">
+      <div class="csx-label">The problem</div>
+      <div class="cs-block__body">
+        <h2>Four symptoms, one root cause.</h2>
+        <ul>
+          <li><strong>Inconsistent look</strong> - buttons, forms and spacing looked different on every page. The app felt unprofessional and confused users.</li>
+          <li><strong>Slow development</strong> - engineers rebuilt the same parts over and over for every new feature, dragging out every release.</li>
+          <li><strong>No single guide</strong> - "primary blue" meant three different hex values depending on who you asked.</li>
+          <li><strong>Hard to grow</strong> - every new feature made things messier; adding new things without breaking old ones was getting genuinely difficult.</li>
+        </ul>
+        <p>The cost wasn't just aesthetic. Every inconsistency was a decision being remade, a review comment being retyped, and a few more hours lost to rework.</p>
+        <p class="big-q">“The goal was never prettier screens. It was to stop making the same decision twice.”</p>
+      </div>
+    </section>
+
+    <!-- Showcase -->
+    <div class="csx-cover reveal" style="margin-block: clamp(30px,5vw,56px)">
+      <img src="assets/case/ds-hero.png" alt="Design system overview - color tokens with contrast ratios, components, calendar and icon set" />
+    </div>
+
+    <!-- Foundations -->
+    <section class="csx-row reveal">
+      <div class="csx-label">Foundations</div>
+      <div class="cs-block__body">
+        <h2>Audit first, then build in layers.</h2>
+        <p>I started by indexing every screen and component in the dashboard's Figma file. The audit surfaced the usual suspects - multiple versions of the same button, duplicate inputs, a dozen greys doing the same job - and pointed exactly at where standardisation would pay off most.</p>
+        <p><strong>Typography.</strong> One typeface, one scale. Inter was selected for its readability, modern appearance and adaptability across platforms.</p>
+        <div class="cs-figure fit"><img class="visual" src="assets/case/ds-typography.png" alt="Typography specimen - Inter typeface" /></div>
+        <div class="cs-figure fit"><img class="visual" src="assets/case/ds-typography-2.png" alt="Type scale - font sizes and weights defined for the design system" /></div>
+        <p><strong>Colour, as tokens.</strong> An official brand palette plus semantic colours for success, error, warning and info - every swatch contrast-checked, all managed centrally so one edit propagates everywhere at once.</p>
+        <div class="cs-figure fit"><img class="visual" src="assets/case/ds-colors.png" alt="Colour styles - brand and semantic palette" /></div>
+        <div class="cs-figure fit"><img class="visual" src="assets/case/ds-color-tokens.png" alt="Colour styles integrated into design tokens" /></div>
+        <p><strong>Spacing &amp; icons.</strong> A simple spatial grid decides every distance, and one icon set is used everywhere for the same actions.</p>
+        <div class="cs-two">
+          <div class="cs-figure fit"><img class="visual" src="assets/case/ds-spacing.png" alt="Spacing scale and grid rules" /></div>
+          <div class="cs-figure fit"><img class="visual" src="assets/case/ds-icons.png" alt="Unified icon set" /></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Components -->
+    <section class="csx-row reveal">
+      <div class="csx-label">The solution</div>
+      <div class="cs-block__body">
+        <h2>A component library the whole team could trust.</h2>
+        <p>Built in Figma with nested components, properties and variants. Every component is responsive and constraint-driven, mapped with interactive states (hover, focus, disabled), and categorised clearly - forms, buttons, navigation, tables - so it's easy to browse and adapt.</p>
+        <div class="cs-figure fit"><img class="visual" src="assets/case/ds-components.png" alt="Component library - core components with variants" /></div>
+        <div class="cs-figure fit"><img class="visual" src="assets/case/ds-components-2.png" alt="Component library - form and navigation components" /></div>
+        <p><strong>Buttons</strong> got special attention - they're the interface's verbs. A strict hierarchy so users always know the most important next step.</p>
+        <div class="cs-figure fit"><img class="visual" src="assets/case/ds-buttons.png" alt="Button styles - hierarchy, sizes and states" /></div>
+        <p>Just as important was <strong>governance</strong>: a lightweight contribution process so the system evolves with the product instead of freezing in place.</p>
+      </div>
+    </section>
+
+    <!-- Second before/after -->
+    <section class="csx-full reveal">
+      <div class="csx-label">Before &amp; after</div>
+      <h2>The Insights dashboard, rebuilt on the system.</h2>
+      <div class="ba">
+        <span class="ba__side ba__side--l">Before</span>
+        <div class="ba__frame" data-ba>
+          <img src="assets/case/ds-insights-after.png" alt="Insights dashboard after the design system" />
+          <div class="ba__top"><img src="assets/case/ds-insights-before.png" alt="Insights dashboard before the design system" /></div>
+          <div class="ba__handle"></div>
+        </div>
+        <span class="ba__side ba__side--r">After</span>
+      </div>
+      <p class="cs-figcap">One type scale, one colour language, consistent components - trust built with modern design principles and accessibility standards intact.</p>
+    </section>
+
+    <!-- Results -->
+    <section class="csx-row reveal">
+      <div class="csx-label">The results</div>
+      <div class="cs-block__body">
+        <h2>The system became the default way we build.</h2>
+        <p>Designers assembled screens from trusted parts instead of redrawing them; engineers implemented against a shared, documented contract.</p>
+        <div class="cs-outcomes">
+          <div class="cs-outcome"><div class="num">~40%</div><div class="lbl">Faster design-to-handoff on new features</div></div>
+          <div class="cs-outcome"><div class="num">1</div><div class="lbl">Source of truth shared by design & engineering</div></div>
+          <div class="cs-outcome"><div class="num">↓</div><div class="lbl">Sharp drop in visual bugs and rework</div></div>
+        </div>
+        <p>More subtly, the conversation changed. Reviews stopped being about pixel nitpicks and started being about the actual problem we were solving.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Tools -->
+  <section class="tools reveal">
+    <div class="wrap">
+      <div class="project__tags" style="justify-content:center; margin-bottom:18px"><span class="tag">Design System</span><span class="tag">UI/UX</span></div>
+      <h2>Tools used in this project.</h2>
+      <div class="tools__chips">
+        <span class="tool-chip">Figma</span>
+        <span class="tool-chip">Design Tokens</span>
+        <span class="tool-chip">Variants & Properties</span>
+        <span class="tool-chip">Auto Layout</span>
+        <span class="tool-chip">FigJam</span>
+        <span class="tool-chip">Contrast Checking</span>
+        <span class="tool-chip">Documentation</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Takeaway quote -->
+  <section class="wrap" style="padding-block: clamp(44px,6.5vw,88px)">
+    <div class="csx-row reveal" style="border:none; padding-block:0">
+      <div class="csx-label">Takeaway</div>
+      <div class="quote-card">
+        <div class="quote-card__brand">Design<br/>System<span class="muted-sub" style="display:block; font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-faint); margin-top:10px">Lessons learned</span></div>
+        <div>
+          <p class="quote-card__q">“A design system is 20% components and 80% getting people to actually use it. It's a product of its own - it needs docs, onboarding and care, and it only pays off when it's the path of least resistance for everyone.”</p>
+          <div class="quote-card__who">
+            <img src="assets/bhaskar.jpg" alt="Bhaskar Jyoti Goswami" />
+            <div><div class="n">Bhaskar Jyoti Goswami</div><div class="t">Senior UI/UX Designer</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Next -->
+  <section class="cs-next">
+    <div class="wrap">
+      <span class="eyebrow">Next project</span>
+      <a href="case-unseen.html">Designing for the Unseen</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer__bottom" style="border:none">
+        <span>© <span data-year></span> Bhaskar Jyoti Goswami</span>
+        <a href="index.html#contact">bhaskarjgoswami@gmail.com</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js?v=3"></script>
+</body>
+</html>

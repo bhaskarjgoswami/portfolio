@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>After — Questions builder</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { width:1600px; height:976px; overflow:hidden; font-family:'Inter',sans-serif; background:#f3f6fd; color:#1f2937; }
+
+  .glass-head { position:fixed; top:0; left:0; right:0; z-index:10; min-height:64px; padding:18px 32px;
+    background:rgba(243,246,253,.6); backdrop-filter:blur(12px) saturate(140%); -webkit-backdrop-filter:blur(12px) saturate(140%);
+    display:flex; align-items:center; justify-content:center; box-shadow:0 1px 2px rgba(16,24,40,.05); }
+  .back { position:fixed; top:14px; left:20px; z-index:11; display:flex; align-items:center; gap:6px; border:none; background:none;
+    color:#5925dc; font-size:14px; font-weight:600; font-family:'Inter',sans-serif; cursor:pointer; padding:8px 12px; border-radius:8px; }
+  .stepper { display:flex; align-items:center; gap:12px; }
+  .st { display:flex; align-items:center; gap:8px; }
+  .st .dot { width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:600;
+    border:1.5px solid #d0d5dd; color:#98a2b3; background:#fff; }
+  .st.done .dot { background:#ede9fe; border-color:#c4b5fd; color:#5925dc; }
+  .st.active .dot { background:#7f56d9; border-color:#7f56d9; color:#fff; }
+  .st .lbl { font-size:13px; font-weight:500; color:#98a2b3; white-space:nowrap; }
+  .st.active .lbl { color:#1f2937; font-weight:600; }
+  .st.done .lbl { color:#4b5563; }
+  .conn { width:38px; height:1.5px; background:#e5e7eb; border-radius:1px; }
+
+  .qb-grid { position:fixed; top:64px; bottom:74px; left:0; right:0; display:grid; grid-template-columns:minmax(0,.75fr) minmax(0,1.35fr) minmax(0,.9fr); }
+  .panel { display:flex; flex-direction:column; min-height:0; border-right:1px solid #ebeef6; overflow:hidden; }
+  .panel.preview { background:#fff; border-right:none; }
+
+  .p-head { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; padding:20px 24px 12px; border-bottom:1px solid #e8ecf6; }
+  .p-head .t { font-size:14px; font-weight:600; color:#1f2937; }
+  .p-head .t span { color:#9ca3af; font-weight:400; }
+  .p-head .meta { font-size:12px; color:#9ca3af; margin-top:4px; }
+  .p-actions { display:flex; align-items:center; gap:12px; }
+  .link { font-size:13px; font-weight:500; color:#5925dc; cursor:pointer; white-space:nowrap; }
+  .link.muted { color:#9ca3af; }
+  .help { width:26px; height:26px; border-radius:8px; border:none; background:none; color:#9ca3af; font-size:13px; font-weight:600; cursor:pointer; }
+
+  .search { padding:12px 24px 0; }
+  .search .in { height:38px; background:#fff; border:1px solid #d0d5dd; border-radius:8px; display:flex; align-items:center; gap:8px; padding:0 12px; font-size:13px; color:#98a2b3; }
+  .search svg { width:15px; height:15px; }
+
+  .bank-list { flex:1; overflow:hidden; padding:16px 24px 24px; }
+  .cat-head { display:flex; align-items:center; gap:8px; padding:8px 4px; font-size:14px; font-weight:600; color:#374151; }
+  .cat-head .count { font-size:13px; color:#9ca3af; font-weight:400; }
+  .cat-head .chev { font-size:10px; color:#9ca3af; }
+  .cat-body { padding:4px 0 8px 22px; display:flex; flex-direction:column; gap:8px; }
+  .q-card { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; padding:12px; border:1px solid #edf0f7; border-radius:10px; background:#fafbfc; }
+  .q-card .qt { flex:1; }
+  .q-card .qq { font-size:13px; color:#1f2937; line-height:1.45; margin-bottom:8px; }
+  .tag { display:inline-flex; align-items:center; height:20px; padding:0 8px; border-radius:10px; font-size:11px; font-weight:500; }
+  .tag.green { background:#ecfdf3; color:#039855; }
+  .tag.grey { background:#f2f4f7; color:#4b5563; }
+  .addb { width:34px; height:34px; border-radius:8px; border:none; background:#7f56d9; color:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer; flex:none; }
+  .addb svg { width:16px; height:16px; }
+
+  /* middle */
+  .note { display:flex; gap:8px; align-items:flex-start; margin:14px 24px 0; padding:10px 12px; background:#faf8ff; border:1px solid #ece9fe; border-radius:10px; font-size:12.5px; font-weight:500; color:#5b3bbf; }
+  .note svg { width:15px; height:15px; flex:none; margin-top:1px; }
+  .sel-list { flex:1; overflow:hidden; padding:14px 24px 24px; display:flex; flex-direction:column; gap:10px; }
+  .sel-card { border:1px solid #edf0f7; border-radius:12px; background:#fff; }
+  .sel-card.open { background:#faf8ff; border-color:#c4b5fd; box-shadow:0 0 0 3px rgba(127,86,217,.1); }
+  .sel-head { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; padding:14px 16px; }
+  .sel-text { font-size:14px; color:#1f2937; line-height:1.5; margin-bottom:10px; }
+  .sel-meta { display:flex; gap:8px; flex-wrap:wrap; }
+  .sel-actions { display:flex; gap:4px; color:#6b7280; }
+  .icon-btn { width:28px; height:28px; border-radius:8px; border:none; background:none; color:#6b7280; display:flex; align-items:center; justify-content:center; cursor:pointer; }
+  .icon-btn svg { width:15px; height:15px; }
+  .sel-body { border-top:1px solid #eef1f8; padding:16px; display:flex; flex-direction:column; gap:12px; }
+  .sel-body .k { font-size:12px; font-weight:500; color:#6b7280; }
+  .opts { display:flex; gap:8px; flex-wrap:wrap; }
+  .opt-pill { padding:5px 12px; background:#f2f4f7; border-radius:16px; font-size:12.5px; color:#374151; }
+  .tg-row { display:flex; align-items:center; justify-content:space-between; }
+  .tg-row .k { font-size:13px; color:#374151; }
+  .tog { width:34px; height:19px; border-radius:10px; background:#e5e7eb; position:relative; }
+  .tog.on { background:#7f56d9; }
+  .tog::after { content:''; position:absolute; width:15px; height:15px; border-radius:50%; background:#fff; top:2px; left:2px; }
+  .tog.on::after { left:17px; }
+
+  /* preview */
+  .pv-head { display:flex; align-items:center; justify-content:space-between; padding:20px 24px 12px; border-bottom:1px solid #f3f4f6; }
+  .pv-title { display:flex; align-items:center; gap:8px; font-size:14px; font-weight:600; color:#1f2937; }
+  .pv-dot { width:8px; height:8px; border-radius:50%; background:#12b76a; box-shadow:0 0 0 3px rgba(18,183,106,.18); }
+  .pv-body { flex:1; padding:20px 24px; display:flex; flex-direction:column; }
+  .pv-prog { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+  .pv-prog .k { font-size:12px; color:#98a2b3; }
+  .pv-bar { width:120px; height:5px; background:#eef0f4; border-radius:3px; overflow:hidden; }
+  .pv-bar i { display:block; width:50%; height:100%; background:#7f56d9; border-radius:3px; }
+  .pv-card { border:1px solid #f3f4f6; border-radius:14px; padding:26px 22px; box-shadow:0 10px 26px -18px rgba(16,24,40,.24); }
+  .pv-q { font-size:15.5px; font-weight:600; color:#1f2937; text-align:center; line-height:1.5; margin-bottom:22px; }
+  .likert { display:flex; justify-content:space-between; gap:8px; margin-bottom:8px; }
+  .smile { width:44px; height:44px; border-radius:50%; border:1.5px solid #e5e7eb; display:flex; align-items:center; justify-content:center; font-size:19px; background:#fff; }
+  .smile.sel { border-color:#7f56d9; background:#faf8ff; box-shadow:0 0 0 3px rgba(127,86,217,.14); }
+  .lk-lbls { display:flex; justify-content:space-between; font-size:11px; color:#9ca3af; margin-bottom:20px; }
+  .pv-nav { display:flex; justify-content:space-between; align-items:center; margin-top:6px; }
+  .pv-btn { height:36px; padding:0 16px; border-radius:8px; font-family:'Inter',sans-serif; font-size:13px; font-weight:600; border:none; cursor:pointer; }
+  .pv-btn.g { background:none; color:#6b7280; }
+  .pv-btn.p { background:#7f56d9; color:#fff; }
+
+  .glass-foot { position:fixed; bottom:0; left:0; right:0; z-index:10; padding:16px 32px;
+    background:rgba(243,246,253,.6); backdrop-filter:blur(12px) saturate(140%); -webkit-backdrop-filter:blur(12px) saturate(140%);
+    display:flex; align-items:center; justify-content:space-between; }
+  .btn { height:42px; padding:0 22px; border-radius:8px; font-family:'Inter',sans-serif; font-size:14px; font-weight:600; display:flex; align-items:center; gap:8px; cursor:pointer; border:none; }
+  .btn.ghost { background:none; color:#5925dc; }
+  .btn.solid { background:#7f56d9; color:#fff; box-shadow:0 1px 2px rgba(16,24,40,.08); }
+</style>
+</head>
+<body>
+  <button class="back">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Back
+  </button>
+
+  <div class="glass-head">
+    <div class="stepper">
+      <div class="st done"><div class="dot">✓</div><div class="lbl">Set up</div></div>
+      <div class="conn"></div>
+      <div class="st done"><div class="dot">✓</div><div class="lbl">Audience</div></div>
+      <div class="conn"></div>
+      <div class="st active"><div class="dot">3</div><div class="lbl">Questions</div></div>
+      <div class="conn"></div>
+      <div class="st"><div class="dot">4</div><div class="lbl">Email</div></div>
+      <div class="conn"></div>
+      <div class="st"><div class="dot">5</div><div class="lbl">Review &amp; launch</div></div>
+    </div>
+  </div>
+
+  <div class="qb-grid">
+    <!-- LEFT: question bank -->
+    <div class="panel">
+      <div class="p-head">
+        <div>
+          <div class="t">Question bank <span>(53)</span></div>
+        </div>
+        <div class="p-actions">
+          <span class="link">Add all</span>
+          <button class="help">?</button>
+        </div>
+      </div>
+      <div class="search">
+        <div class="in">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#98a2b3" stroke-width="1.8"/><path d="M20 20l-3.5-3.5" stroke="#98a2b3" stroke-width="1.8" stroke-linecap="round"/></svg>
+          Search questions
+        </div>
+      </div>
+      <div class="bank-list">
+        <div class="cat-head"><span class="chev">▾</span> Engagement <span class="count">(12)</span></div>
+        <div class="cat-body">
+          <div class="q-card">
+            <div class="qt">
+              <div class="qq">I would recommend this company as a great place to work.</div>
+              <span class="tag green">Rated 1–10</span>
+            </div>
+            <button class="addb"><svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+          </div>
+          <div class="q-card">
+            <div class="qt">
+              <div class="qq">I see myself still working here in two years' time.</div>
+              <span class="tag green">Rated 1–5</span>
+            </div>
+            <button class="addb"><svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+          </div>
+          <div class="q-card">
+            <div class="qt">
+              <div class="qq">The leaders here communicate a vision that motivates me.</div>
+              <span class="tag green">Rated 1–5</span>
+            </div>
+            <button class="addb"><svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+          </div>
+        </div>
+        <div class="cat-head"><span class="chev">▸</span> Manager effectiveness <span class="count">(8)</span></div>
+        <div class="cat-head"><span class="chev">▸</span> Wellbeing <span class="count">(9)</span></div>
+        <div class="cat-head"><span class="chev">▸</span> Recognition <span class="count">(6)</span></div>
+        <div class="cat-head"><span class="chev">▸</span> Career growth <span class="count">(7)</span></div>
+      </div>
+    </div>
+
+    <!-- MIDDLE: selected -->
+    <div class="panel">
+      <div class="p-head">
+        <div>
+          <div class="t">Selected questions</div>
+          <div class="meta">4 questions selected · from 2 categories · 3 mins to complete</div>
+        </div>
+        <div class="p-actions"><span class="link muted">Clear all</span></div>
+      </div>
+      <div class="note">
+        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#7f56d9" stroke-width="1.8"/><path d="M12 11v5M12 8v.5" stroke="#7f56d9" stroke-width="1.8" stroke-linecap="round"/></svg>
+        Questions are randomly sampled per employee to keep responses unbiased.
+      </div>
+      <div class="sel-list">
+        <div class="sel-card">
+          <div class="sel-head">
+            <div>
+              <div class="sel-text">Q1. I feel motivated to go beyond what is expected of me at work.</div>
+              <div class="sel-meta"><span class="tag grey">Engagement</span><span class="tag green">Rated 1–5</span></div>
+            </div>
+            <div class="sel-actions">
+              <button class="icon-btn"><svg viewBox="0 0 24 24" fill="none"><path d="M6 7h12M9 7V5h6v2m-8 0l1 13h8l1-13" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+              <button class="icon-btn"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="sel-card open">
+          <div class="sel-head">
+            <div>
+              <div class="sel-text">Q2. Which of these would improve your day-to-day experience the most?</div>
+              <div class="sel-meta"><span class="tag grey">Engagement</span><span class="tag green">Multiple choice</span></div>
+            </div>
+            <div class="sel-actions">
+              <button class="icon-btn"><svg viewBox="0 0 24 24" fill="none"><path d="M6 7h12M9 7V5h6v2m-8 0l1 13h8l1-13" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+              <button class="icon-btn"><svg viewBox="0 0 24 24" fill="none"><path d="M6 15l6-6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+            </div>
+          </div>
+          <div class="sel-body">
+            <div>
+              <div class="k" style="margin-bottom:8px">Options</div>
+              <div class="opts">
+                <span class="opt-pill">Flexible hours</span>
+                <span class="opt-pill">Better tools</span>
+                <span class="opt-pill">More recognition</span>
+                <span class="opt-pill">Clearer goals</span>
+              </div>
+            </div>
+            <div class="tg-row"><span class="k">Is this question mandatory?</span><div class="tog on"></div></div>
+            <div class="tg-row"><span class="k">Is adding a comment mandatory?</span><div class="tog"></div></div>
+          </div>
+        </div>
+
+        <div class="sel-card">
+          <div class="sel-head">
+            <div>
+              <div class="sel-text">Q3. My manager gives me actionable feedback on a regular basis.</div>
+              <div class="sel-meta"><span class="tag grey">Manager effectiveness</span><span class="tag green">Rated 1–5</span></div>
+            </div>
+            <div class="sel-actions">
+              <button class="icon-btn"><svg viewBox="0 0 24 24" fill="none"><path d="M6 7h12M9 7V5h6v2m-8 0l1 13h8l1-13" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+              <button class="icon-btn"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="sel-card">
+          <div class="sel-head">
+            <div>
+              <div class="sel-text">Q4. What is one thing we could do to make this a better place to work?</div>
+              <div class="sel-meta"><span class="tag grey">Engagement</span><span class="tag green">Open-ended</span></div>
+            </div>
+            <div class="sel-actions">
+              <button class="icon-btn"><svg viewBox="0 0 24 24" fill="none"><path d="M6 7h12M9 7V5h6v2m-8 0l1 13h8l1-13" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+              <button class="icon-btn"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: live preview -->
+    <div class="panel preview">
+      <div class="pv-head">
+        <div class="pv-title"><span class="pv-dot"></span> Live preview</div>
+        <button class="icon-btn"><svg viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+      </div>
+      <div class="pv-body">
+        <div class="pv-prog">
+          <span class="k">Question 2 of 4</span>
+          <div class="pv-bar"><i></i></div>
+        </div>
+        <div class="pv-card">
+          <div class="pv-q">Which of these would improve your day-to-day experience the most?</div>
+          <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:22px;">
+            <div style="display:flex; align-items:center; gap:10px; border:1.5px solid #7f56d9; background:#faf8ff; border-radius:10px; padding:11px 14px; font-size:13.5px; color:#1f2937;">
+              <span style="width:16px;height:16px;border-radius:50%;border:5px solid #7f56d9;display:inline-block;"></span> Flexible hours
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; border:1px solid #e5e7eb; border-radius:10px; padding:11px 14px; font-size:13.5px; color:#374151;">
+              <span style="width:16px;height:16px;border-radius:50%;border:1.5px solid #d0d5dd;display:inline-block;"></span> Better tools
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; border:1px solid #e5e7eb; border-radius:10px; padding:11px 14px; font-size:13.5px; color:#374151;">
+              <span style="width:16px;height:16px;border-radius:50%;border:1.5px solid #d0d5dd;display:inline-block;"></span> More recognition
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; border:1px solid #e5e7eb; border-radius:10px; padding:11px 14px; font-size:13.5px; color:#374151;">
+              <span style="width:16px;height:16px;border-radius:50%;border:1.5px solid #d0d5dd;display:inline-block;"></span> Clearer goals
+            </div>
+          </div>
+          <div class="pv-nav">
+            <button class="pv-btn g">Back</button>
+            <button class="pv-btn p">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="glass-foot">
+    <button class="btn ghost">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back
+    </button>
+    <button class="btn solid">Continue
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</body>
+</html>

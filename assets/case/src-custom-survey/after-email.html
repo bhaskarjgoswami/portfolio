@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>After — Email invitation</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { width:1600px; height:976px; overflow:hidden; font-family:'Inter',sans-serif; background:#f3f6fd; color:#1f2937; }
+
+  .glass-head { position:fixed; top:0; left:0; right:0; z-index:10; min-height:64px; padding:18px 32px;
+    background:rgba(243,246,253,.6); backdrop-filter:blur(12px) saturate(140%); display:flex; align-items:center; justify-content:center; box-shadow:0 1px 2px rgba(16,24,40,.05); }
+  .back { position:fixed; top:14px; left:20px; z-index:11; display:flex; align-items:center; gap:6px; border:none; background:none;
+    color:#5925dc; font-size:14px; font-weight:600; font-family:'Inter',sans-serif; cursor:pointer; padding:8px 12px; border-radius:8px; }
+  .stepper { display:flex; align-items:center; gap:12px; }
+  .st { display:flex; align-items:center; gap:8px; }
+  .st .dot { width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:600; border:1.5px solid #d0d5dd; color:#98a2b3; background:#fff; }
+  .st.done .dot { background:#ede9fe; border-color:#c4b5fd; color:#5925dc; }
+  .st.active .dot { background:#7f56d9; border-color:#7f56d9; color:#fff; }
+  .st .lbl { font-size:13px; font-weight:500; color:#98a2b3; white-space:nowrap; }
+  .st.active .lbl { color:#1f2937; font-weight:600; }
+  .st.done .lbl { color:#4b5563; }
+  .conn { width:38px; height:1.5px; background:#e5e7eb; border-radius:1px; }
+
+  .scroll { padding:100px 32px 110px; }
+  .shell { max-width:960px; margin:0 auto; background:#fff; border-radius:12px; padding:44px 90px; display:flex; flex-direction:column; gap:24px; }
+
+  .hrow { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; }
+  h3.title { font-size:20px; font-weight:600; color:#1f2937; margin-bottom:2px; }
+  .sub { font-size:14px; color:#9ca3af; }
+  .btn-out { height:38px; padding:0 16px; border-radius:8px; border:1.5px solid #c4b5fd; background:#fff; color:#5925dc; font-family:'Inter',sans-serif; font-size:13px; font-weight:600; display:flex; align-items:center; gap:7px; cursor:pointer; white-space:nowrap; }
+  .btn-out svg { width:15px; height:15px; }
+
+  .card { border:1px solid #f3f4f6; border-radius:12px; padding:24px; display:flex; flex-direction:column; gap:18px; }
+  .card-top { display:flex; justify-content:flex-end; }
+  .tmpl { height:34px; display:flex; align-items:center; gap:8px; border:1px solid #d0d5dd; border-radius:8px; padding:0 12px; font-size:13px; color:#374151; }
+  .tmpl svg { width:14px; height:14px; }
+  .f label { display:block; font-size:12px; font-weight:500; color:#3f3d56; margin-bottom:6px; }
+  .f label .req { color:#f04438; }
+  .in { height:42px; background:#fff; border:1px solid #d0d5dd; border-radius:8px; display:flex; align-items:center; padding:0 14px; font-size:14px; color:#1f2937; }
+  .ta { background:#fff; border:1px solid #d0d5dd; border-radius:8px; padding:11px 14px; font-size:13.5px; color:#374151; line-height:1.6; }
+  .notep { font-size:12px; color:#9ca3af; font-style:italic; }
+
+  /* drawer */
+  .backdrop { position:fixed; inset:0; z-index:80; background:rgba(0,0,0,.3); backdrop-filter:blur(3px); }
+  .drawer { position:fixed; top:16px; right:16px; bottom:16px; width:480px; z-index:81; background:#fff; border-radius:12px; box-shadow:0 24px 60px -12px rgba(16,24,40,.35); display:flex; flex-direction:column; overflow:hidden; }
+  .d-head { display:flex; align-items:center; justify-content:space-between; padding:20px 24px; border-bottom:1px solid #f3f4f6; }
+  .d-head .t { font-size:14px; font-weight:600; color:#1f2937; }
+  .d-close { border:none; background:none; color:#6b7280; font-size:16px; cursor:pointer; }
+  .d-body { padding:24px; overflow:hidden; flex:1; }
+  .frame { border-radius:12px; background:#fcfcfd; border:1px solid #f3f4f6; padding:28px; }
+  .logo { display:flex; align-items:center; gap:8px; margin-bottom:14px; }
+  .logo .lg { width:34px; height:34px; border-radius:8px; background:#7f56d9; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:15px; }
+  .logo .ln { font-size:15px; font-weight:700; color:#29294c; }
+  .divl { height:2px; background:#d5dadd; margin-bottom:16px; }
+  .g { font-size:13.5px; color:#374151; margin-bottom:12px; }
+  .bodytx { font-size:13.5px; color:#374151; line-height:1.65; margin-bottom:20px; }
+  .cta { display:inline-block; background:#7f56d9; color:#fff; padding:9px 24px; border-radius:8px; font-size:13.5px; font-weight:500; margin-bottom:18px; }
+  .anon { font-size:11.5px; color:#6b7280; font-style:italic; text-align:center; margin-bottom:16px; }
+  .sig { font-size:13px; color:#4b5563; line-height:1.6; }
+
+  .test-row { display:flex; gap:12px; align-items:center; margin-top:16px; position:relative; }
+  .test-in { flex:1; height:42px; border:1px solid #d0d5dd; border-radius:8px; display:flex; align-items:center; padding:0 14px; font-size:13px; color:#98a2b3; }
+  .test-btn { position:absolute; right:5px; height:32px; padding:0 14px; border:none; border-radius:7px; background:#ece9fe; color:#5925dc; font-family:'Inter',sans-serif; font-size:13px; font-weight:600; cursor:pointer; }
+
+  .glass-foot { position:fixed; bottom:0; left:0; right:0; z-index:10; padding:16px 32px;
+    background:rgba(243,246,253,.6); backdrop-filter:blur(12px) saturate(140%); display:flex; align-items:center; justify-content:space-between; }
+  .btn { height:42px; padding:0 22px; border-radius:8px; font-family:'Inter',sans-serif; font-size:14px; font-weight:600; display:flex; align-items:center; gap:8px; cursor:pointer; border:none; }
+  .btn.ghost { background:none; color:#5925dc; }
+  .btn.solid { background:#7f56d9; color:#fff; box-shadow:0 1px 2px rgba(16,24,40,.08); }
+</style>
+</head>
+<body>
+  <button class="back">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Back
+  </button>
+
+  <div class="glass-head">
+    <div class="stepper">
+      <div class="st done"><div class="dot">✓</div><div class="lbl">Set up</div></div>
+      <div class="conn"></div>
+      <div class="st done"><div class="dot">✓</div><div class="lbl">Audience</div></div>
+      <div class="conn"></div>
+      <div class="st done"><div class="dot">✓</div><div class="lbl">Questions</div></div>
+      <div class="conn"></div>
+      <div class="st active"><div class="dot">4</div><div class="lbl">Email</div></div>
+      <div class="conn"></div>
+      <div class="st"><div class="dot">5</div><div class="lbl">Review &amp; launch</div></div>
+    </div>
+  </div>
+
+  <div class="scroll">
+    <div class="shell">
+      <div class="hrow">
+        <div>
+          <h3 class="title">Customize the invitation email</h3>
+          <p class="sub">Edit the subject, body, and signature your employees will receive.</p>
+        </div>
+        <button class="btn-out">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.7"/></svg>
+          Preview email
+        </button>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div class="tmpl">Friendly reminder template <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#9ca3af" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="f">
+          <label>Email subject <span class="req">*</span></label>
+          <div class="in">Your voice matters — Q3 Engagement Pulse is live</div>
+        </div>
+        <div class="f">
+          <label>Email body <span class="req">*</span></label>
+          <div class="ta" style="height:140px">We're running a short survey to understand how things are going for you at work. It takes about 3 minutes, and your responses are completely anonymous.<br/><br/>Your honest feedback directly shapes what we improve next quarter.</div>
+        </div>
+        <div class="f">
+          <label>Signature</label>
+          <div class="ta" style="height:64px">Warm regards,<br/>The People Team</div>
+        </div>
+        <p class="notep">Note: Edit the message on this screen to personalize the email your team members will receive.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="glass-foot">
+    <button class="btn ghost">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back
+    </button>
+    <button class="btn solid">Continue
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+
+  <!-- preview drawer -->
+  <div class="backdrop"></div>
+  <div class="drawer">
+    <div class="d-head">
+      <span class="t">Preview your email invitation</span>
+      <button class="d-close">✕</button>
+    </div>
+    <div class="d-body">
+      <div class="frame">
+        <div class="logo"><span class="lg">V</span><span class="ln">Vantage Pulse</span></div>
+        <div class="divl"></div>
+        <div class="g">Hi &lt;Name&gt;,</div>
+        <div class="bodytx">We're running a short survey to understand how things are going for you at work. It takes about 3 minutes, and your responses are completely anonymous.<br/><br/>Your honest feedback directly shapes what we improve next quarter.</div>
+        <span class="cta">Start Survey</span>
+        <div class="anon">Your responses are anonymous and reported only in aggregate.</div>
+        <div class="sig">Warm regards,<br/>The People Team</div>
+      </div>
+      <div class="test-row">
+        <div class="test-in">Add emails here</div>
+        <button class="test-btn">Test</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

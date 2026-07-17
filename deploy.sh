@@ -6,7 +6,9 @@ set -e
 cd "$(dirname "$0")"
 
 export CLOUDFLARE_ACCOUNT_ID=8c992f68d84a2a5f5d7372d1bddf06c3
-TOKEN=$(grep '^oauth_token' ~/Library/Preferences/.wrangler/config/default.toml | cut -d'"' -f2)
+# wrangler may write its OAuth config to either location depending on version - use the newest
+CONFIG=$(ls -t ~/.wrangler/config/default.toml ~/Library/Preferences/.wrangler/config/default.toml 2>/dev/null | head -1)
+TOKEN=$(grep '^oauth_token' "$CONFIG" | cut -d'"' -f2)
 if [ -n "$TOKEN" ]; then
   export CLOUDFLARE_API_TOKEN=$TOKEN
 fi
